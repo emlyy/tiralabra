@@ -12,6 +12,7 @@ Epäselväksi jäi vielä, miten eri pelin tilanteet pisteytetään minimaxille 
 ## Mitä teen seuraavaksi?
 Seuraavaksi aloitan pelin tekemisen käyttöliittymällä. 
 
+## Työhön käytetty aika
 | pvm | h | mitä tein |
 | :--- | ---: | :--- |
 | 5.9 | 2 | luento |
