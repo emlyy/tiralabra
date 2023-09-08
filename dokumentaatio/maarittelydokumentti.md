@@ -19,7 +19,7 @@ Toteutan Connect Four pelille tekoälyn, jota vastaan voi pelata. Valitsin Conne
 Pelilaudan tilanteen seuraamiseksi tulen käyttämään matriisia.
 
 ### Aika ja tila vaativuudet
-Minimax-algoritmin aikavaativuus on O(b^m), missä b on vaihtoehtoisten siirtojen määrä, ja m on puun suurin syvyys [1]. Tila vaativuus O(bm). Alpha beta karsinnan kanssa pahin mahdollinen aikavaativuus on sama kuin minimax, eli puu joudutaan käymään kokonaan läpi. Paras aikavaativuus on O(b^(d/2)), missä d on syvyys.
+Minimax-algoritmin aikavaativuus on O(b^m), missä b on vaihtoehtoisten siirtojen määrä, ja m on puun suurin syvyys [1]. Tila vaativuus O(bm). Alpha-beta-karsinnan kanssa pahin mahdollinen aikavaativuus on sama kuin pelkkä minimax, eli puu joudutaan käymään kokonaan läpi. Paras aikavaativuus on O(b^(d/2)), missä d on syvyys.
 
 ### Opinto-ohjelma
 Opiskelen tietojenkäsittelytieteen kandidaatin tutkintoa (TKT).
