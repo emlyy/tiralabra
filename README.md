@@ -10,3 +10,22 @@ Helsingin yliopiston aineopintojen harjoitustyö: Algoritmit ja tekoäly
 
 ## Viikkoraportit
 - [viikko 1](https://github.com/emlyy/tiralabra/blob/main/dokumentaatio/viikkoraportti-1.md)
+- [viikko 2](dokumentaatio/viikkoraportti-2.md)
+
+## Hyödyllisiä komentoja
+Peli käynnistyy komennolla:
+```
+poetry run invoke start
+```
+Testikattavuus raportti generoituu htmlcov-hakemistoon komennolla:
+```
+poetry run invoke coverage-report
+```
+Testit komennolla:
+```
+poetry run invoke test
+```
+Pylint:
+```
+poetry run invoke lint
+```
