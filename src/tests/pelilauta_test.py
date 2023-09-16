@@ -2,7 +2,6 @@ import unittest
 from pelilauta import PeliLauta
 
 class TestPeliLauta(unittest.TestCase):
-
     def setUp(self):
         self.peli = PeliLauta()
         self.peli.uusi_peli()
@@ -12,7 +11,7 @@ class TestPeliLauta(unittest.TestCase):
         self.assertEqual(self.peli.sallittu_siirto(1), True)
         self.peli.lauta[1][2] = 1
         self.assertEqual(self.peli.sallittu_siirto(2), True)
-    
+
     def test_sallittu_siirto_hyl_kun_sarake_taynna(self):
         self.peli.lauta[0][3] = 1
         self.peli.lauta[0][4] = 2

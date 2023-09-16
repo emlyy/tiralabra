@@ -1,5 +1,5 @@
-from pelilauta import PeliLauta
 from random import randint
+from pelilauta import PeliLauta
 
 class Peli:
     """Luokka vastaa pelin silmukasta.
@@ -8,13 +8,24 @@ class Peli:
         self.peli = PeliLauta()
 
     def siirto(self, sarake, pelaaja):
+        """Kutsuu tarvittavat funktiot siirtoa varten.
+
+        Args:
+            sarake (int): Valittu sarake.
+            pelaaja (int): 1: pelaaja, 2: tekoäly
+
+        Returns:
+            boolean: Palauttaa false jos siirto ei onnistunut.
+        """
         if self.peli.sallittu_siirto(sarake):
-                rivi = self.peli.vapaa_rivi(sarake)
-                self.peli.paivita_lauta(rivi, sarake, pelaaja)
-                return True
+            rivi = self.peli.vapaa_rivi(sarake)
+            self.peli.paivita_lauta(rivi, sarake, pelaaja)
+            return True
         return False
 
     def silmukka(self):
+        """Pelin silmukka. Kysyy pelaajan siirtoa, kutsuu päivittävät funktiot, tulostaa pelilaudan.
+        """
         self.peli.uusi_peli()
         vuoro = 0
         kaynnissa = True

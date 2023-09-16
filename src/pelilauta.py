@@ -6,7 +6,8 @@ class PeliLauta:
     Attributes:
         rivit: rivien lkm pelilaudalla
         sarakkeet: sarakkeiden lkm pelilaudalla
-        lauta: Pelilaudan tilannetta kuvaava matriisi. Aluksi kaikki tilat tyhjiä eli 0. 1: pelaaja. 2: tekoäly.
+        lauta: Pelilaudan tilannetta kuvaava matriisi. Aluksi kaikki
+            tilat tyhjiä eli 0. 1: pelaaja. 2: tekoäly.
         viimeisin_siirto: tuple, (x,y) missä x rivi ja y sarake.
     """
     def __init__(self):
@@ -46,7 +47,8 @@ class PeliLauta:
             sarake (int): Valittu sarake.
 
         Returns:
-            boolean: Palauttaa True, jos sarakkeessa on vielä tilaa. False jos sarake täynnä tai ei kuulu laudalle.
+            boolean: Palauttaa True, jos sarakkeessa on vielä tilaa. False jos
+            sarake täynnä tai ei kuulu laudalle.
         """
         if sarake in range(self.sarakkeet):
             return self.lauta[0][sarake] == 0
@@ -83,17 +85,25 @@ class PeliLauta:
             boolean: Palauttaa True, jos löytyy neljän suora, muuten palauttaa False.
         """
         for sarake in range(self.sarakkeet-3):
-            if self.lauta[self.viimeisin_siirto[0]][sarake] == self.lauta[self.viimeisin_siirto[0]][sarake+1] == self.lauta[self.viimeisin_siirto[0]][sarake+2] == self.lauta[self.viimeisin_siirto[0]][sarake+3] != 0:
+            if (self.lauta[self.viimeisin_siirto[0]][sarake] ==
+                self.lauta[self.viimeisin_siirto[0]][sarake+1] ==
+                self.lauta[self.viimeisin_siirto[0]][sarake+2] ==
+                self.lauta[self.viimeisin_siirto[0]][sarake+3] != 0):
                 return True
         for rivi in range(self.rivit-3):
-            if self.lauta[rivi][self.viimeisin_siirto[1]] == self.lauta[rivi+1][self.viimeisin_siirto[1]] == self.lauta[rivi+2][self.viimeisin_siirto[1]] == self.lauta[rivi+3][self.viimeisin_siirto[1]] != 0:
+            if (self.lauta[rivi][self.viimeisin_siirto[1]] ==
+                self.lauta[rivi+1][self.viimeisin_siirto[1]] ==
+                self.lauta[rivi+2][self.viimeisin_siirto[1]] ==
+                self.lauta[rivi+3][self.viimeisin_siirto[1]] != 0):
                 return True
         for rivi in range (self.rivit-3):
             for sarake in range(self.sarakkeet-3):
-                if self.lauta[rivi][sarake] == self.lauta[rivi+1][sarake+1] == self.lauta[rivi+2][sarake+2] == self.lauta[rivi+3][sarake+3] != 0:
+                if (self.lauta[rivi][sarake] == self.lauta[rivi+1][sarake+1] ==
+                    self.lauta[rivi+2][sarake+2] == self.lauta[rivi+3][sarake+3] != 0):
                     return True
         for rivi in range (3,self.rivit):
             for sarake in range(self.sarakkeet-3):
-                if self.lauta[rivi][sarake] == self.lauta[rivi-1][sarake+1] == self.lauta[rivi-2][sarake+2] == self.lauta[rivi-3][sarake+3] != 0:
+                if (self.lauta[rivi][sarake] == self.lauta[rivi-1][sarake+1] ==
+                    self.lauta[rivi-2][sarake+2] == self.lauta[rivi-3][sarake+3] != 0):
                     return True
         return False
