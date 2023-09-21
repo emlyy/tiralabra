@@ -1,5 +1,6 @@
 from random import randint
 from pelilauta import PeliLauta
+from toiminnot import *
 
 class Peli:
     """Luokka vastaa pelin silmukasta.
@@ -17,8 +18,9 @@ class Peli:
         Returns:
             boolean: Palauttaa false jos siirto ei onnistunut.
         """
-        if self.peli.sallittu_siirto(sarake):
-            rivi = self.peli.vapaa_rivi(sarake)
+        lauta = self.peli.lauta
+        if sallittu_siirto(lauta, sarake):
+            rivi = vapaa_rivi(lauta, sarake)
             self.peli.paivita_lauta(rivi, sarake, pelaaja)
             return True
         return False
@@ -41,9 +43,9 @@ class Peli:
                 sarake = randint(0,6)
                 if not self.siirto(sarake, 2):
                     continue
-            if self.peli.tarkista_voitto():
+            if tarkista_voitto(self.peli.lauta, self.peli.viimeisin_siirto):
                 kaynnissa = False
-            if self.peli.taynna():
+            if taynna(self.peli.lauta):
                 tasapeli = True
                 kaynnissa = False
             vuoro += 1
