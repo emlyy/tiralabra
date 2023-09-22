@@ -1,5 +1,5 @@
 import numpy as np
-from pelilauta import PeliLauta, Toiminnot
+from toiminnot import taynna, tarkista_voitto, siirra, vapaa_rivi
 
 def minimax(pelilauta, syvyys, ai_vuoro):
     """Minimax algoritmi. Käy siirrot läpi ja valitsee parhaan vaihtoehdon.
@@ -12,7 +12,7 @@ def minimax(pelilauta, syvyys, ai_vuoro):
     Returns:
         _type_: Palauttaa heuristisen arvon tai valitun siirron.
     """
-    if syvyys == 0 or Toiminnot.taynna() or Toiminnot.tarkista_voitto():
+    if syvyys == 0 or taynna() or tarkista_voitto():
         # laske arvo
         return arvo
     if ai_vuoro:
