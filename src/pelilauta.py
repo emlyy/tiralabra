@@ -1,5 +1,5 @@
 import numpy as np
-from toiminnot import *
+from toiminnot import siirra
 from config import RIVIT, SARAKKEET
 
 class PeliLauta:

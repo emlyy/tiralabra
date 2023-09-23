@@ -1,6 +1,6 @@
 from random import randint
 from pelilauta import PeliLauta
-from toiminnot import *
+from toiminnot import vapaa_rivi, sallittu_siirto, tarkista_voitto, taynna
 
 class Peli:
     """Luokka vastaa pelin silmukasta.

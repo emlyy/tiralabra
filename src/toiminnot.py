@@ -1,6 +1,5 @@
 from config import RIVIT, SARAKKEET
 
-
 """Pelilaudan päivittämiseen liittyviä toimintoja.
 """
 def siirra(lauta, rivi, sarake, vuoro):
@@ -56,6 +55,7 @@ def vapaa_rivi(lauta, sarake):
     for rivi in range(RIVIT-1,-1,-1):
         if lauta[rivi][sarake] == 0:
             return rivi
+    return None
 
 def tarkista_voitto(lauta, viimeisin_siirto):
     """Tarkistaa onko toinen pelaajista saanut neljän suoran.
