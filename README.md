@@ -3,14 +3,15 @@
 Helsingin yliopiston aineopintojen harjoitustyö: Algoritmit ja tekoäly
 
 ## Dokumentaatio
-- [käyttöohje](https://github.com/emlyy/tiralabra/blob/main/dokumentaatio/kayttoohje.md)
-- [määrittelydokumentti](https://github.com/emlyy/tiralabra/blob/main/dokumentaatio/maarittelydokumentti.md)
-- [testausdokumentti](https://github.com/emlyy/tiralabra/blob/main/dokumentaatio/testausdokumentti.md)
-- [toteutusdokumentti](https://github.com/emlyy/tiralabra/blob/main/dokumentaatio/toteutusdokumentti.md)
+- [käyttöohje](dokumentaatio/kayttoohje.md)
+- [määrittelydokumentti](dokumentaatio/maarittelydokumentti.md)
+- [testausdokumentti](dokumentaatio/testausdokumentti.md)
+- [toteutusdokumentti](dokumentaatio/toteutusdokumentti.md)
 
 ## Viikkoraportit
-- [viikko 1](https://github.com/emlyy/tiralabra/blob/main/dokumentaatio/viikkoraportti-1.md)
+- [viikko 1](dokumentaatio/viikkoraportti-1.md)
 - [viikko 2](dokumentaatio/viikkoraportti-2.md)
+- [viikko 3](dokumentaatio/viikkoraportti-3.md)
 
 ## Hyödyllisiä komentoja
 Peli käynnistyy komennolla:
