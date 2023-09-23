@@ -1,4 +1,5 @@
 import unittest
+import numpy as np
 from pelilauta import PeliLauta
 from toiminnot import *
 
@@ -52,3 +53,32 @@ class TestToiminnot(unittest.TestCase):
         self.lauta[3][2] = 1
         self.lauta[4][3] = 1
         self.assertEqual(tarkista_voitto(self.lauta, (1,0)), True)
+
+    def test_vapaa_rivi(self):
+        lauta = np.array([[0, 0, 0, 0, 0, 0, 0], 
+                          [0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 1, 1, 0, 0],
+                          [0, 0, 1, 2, 2, 2, 1]])
+        self.assertEqual(vapaa_rivi(lauta, 3), 3)
+        self.assertEqual(vapaa_rivi(lauta, 1), 5)
+        self.assertEqual(vapaa_rivi(lauta, 5), 4)
+
+    def test_taynna(self):
+        lauta = np.ones((RIVIT,SARAKKEET), dtype=int)
+        self.assertEqual(taynna(lauta), True)
+
+    def test_taynna_kun_tilaa(self):
+        lauta = np.array([[0, 0, 0, 0, 0, 0, 0], 
+                          [0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 1, 1, 1, 0, 0],
+                          [0, 0, 1, 2, 2, 2, 1]])
+        self.assertEqual(taynna(lauta), False)
+        self.assertEqual(taynna(self.lauta), False)
+
+    def test_siirra(self):
+        siirra(self.lauta, 3, 5, 2)
+        self.assertEqual(self.lauta[3][5], 2)
