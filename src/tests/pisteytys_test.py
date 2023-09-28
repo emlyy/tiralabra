@@ -13,8 +13,8 @@ class TestPisteytys(unittest.TestCase):
                           [0, 0, 0, 0, 0, 0, 0],
                           [0, 0, 1, 1, 1, 0, 0],
                           [2, 2, 2, 1, 2, 1, 0]])
-        self.arvo = tarkista_varma_kolme(lauta)
-        self.assertEqual(self.arvo, -np.inf)
+        self.arvo = tarkista_varma_kolme(lauta, 2)
+        self.assertEqual(self.arvo, -500000)
 
     def test_varma_kolmen_suora_alin_rivi(self):
         lauta = np.array([[0, 0, 0, 0, 0, 0, 0], 
@@ -23,8 +23,8 @@ class TestPisteytys(unittest.TestCase):
                           [0, 0, 0, 0, 0, 0, 0],
                           [0, 0, 0, 1, 1, 0, 0],
                           [0, 0, 0, 2, 2, 2, 0]])
-        self.arvo = tarkista_varma_kolme(lauta)
-        self.assertEqual(self.arvo, np.inf)
+        self.arvo = tarkista_varma_kolme(lauta, 2)
+        self.assertEqual(self.arvo, 500000)
 
     def test_varma_kolmen_suora_ei(self):
         lauta = np.array([[0, 0, 0, 0, 0, 0, 0], 
@@ -33,7 +33,7 @@ class TestPisteytys(unittest.TestCase):
                           [0, 0, 0, 0, 0, 0, 0],
                           [0, 0, 0, 1, 1, 1, 0],
                           [0, 2, 0, 2, 1, 2, 0]])
-        self.arvo = tarkista_varma_kolme(lauta)
+        self.arvo = tarkista_varma_kolme(lauta, 1)
         self.assertEqual(self.arvo, 0)
 
     def test_kolmen_suora_vaaka(self):
@@ -43,8 +43,8 @@ class TestPisteytys(unittest.TestCase):
                           [0, 0, 0, 0, 0, 0, 0],
                           [0, 0, 0, 1, 1, 0, 0],
                           [0, 0, 1, 2, 2, 2, 0]])
-        self.arvo = pisteytys(lauta)
-        self.assertEqual(self.arvo, 9000)
+        self.arvo = pisteytys(lauta, 2)
+        self.assertEqual(self.arvo, 10000)
 
     def test_ei_kolmen_suora_vaaka(self):
         lauta = np.array([[0, 0, 0, 0, 0, 0, 0], 
@@ -53,7 +53,7 @@ class TestPisteytys(unittest.TestCase):
                           [0, 0, 0, 0, 0, 0, 0],
                           [0, 0, 0, 1, 1, 0, 0],
                           [0, 0, 1, 2, 2, 2, 1]])
-        self.arvo = pisteytys(lauta)
+        self.arvo = pisteytys(lauta, 2)
         self.assertEqual(self.arvo, 0)
 
     def test_kolmen_suora_pysty(self):
@@ -63,7 +63,7 @@ class TestPisteytys(unittest.TestCase):
                           [0, 0, 0, 1, 2, 0, 0],
                           [0, 0, 2, 1, 1, 0, 0],
                           [0, 0, 1, 2, 2, 0, 0]])
-        self.arvo = pisteytys(lauta)
+        self.arvo = pisteytys(lauta, 2)
         self.assertEqual(self.arvo, -9000)
 
     def test_ei_kolmen_suora_pysty(self):
@@ -73,7 +73,7 @@ class TestPisteytys(unittest.TestCase):
                           [0, 0, 1, 1, 2, 0, 0],
                           [0, 0, 2, 1, 1, 0, 0],
                           [0, 0, 1, 2, 0, 0, 0]])
-        self.arvo = pisteytys(lauta)
+        self.arvo = pisteytys(lauta, 1)
         self.assertEqual(self.arvo, 0)
 
     def test_kolmen_suora_viisto_1(self):
@@ -83,7 +83,7 @@ class TestPisteytys(unittest.TestCase):
                           [0, 0, 0, 0, 1, 0, 0],
                           [0, 0, 0, 1, 2, 0, 0],
                           [0, 0, 1, 2, 2, 0, 0]])
-        self.arvo = pisteytys(lauta)
+        self.arvo = pisteytys(lauta, 2)
         self.assertEqual(self.arvo, -9000)
 
     def test_kolmen_suora_viisto_2(self):
@@ -93,5 +93,5 @@ class TestPisteytys(unittest.TestCase):
                           [0, 0, 0, 2, 0, 0, 0],
                           [0, 0, 0, 1, 2, 1, 0],
                           [0, 0, 1, 2, 1, 2, 0]])
-        self.arvo = pisteytys(lauta)
-        self.assertEqual(self.arvo, 9000)
+        self.arvo = pisteytys(lauta, 2)
+        self.assertEqual(self.arvo, 10000)

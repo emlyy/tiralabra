@@ -1,7 +1,10 @@
-import numpy as np
 from config import RIVIT, SARAKKEET
 
-def tarkista_varma_kolme(lauta):
+def pisteyta(lauta, pelaaja: int):
+    arvo = tarkista_varma_kolme(lauta, pelaaja) + pisteytys(lauta, pelaaja)
+    return arvo
+
+def tarkista_varma_kolme(lauta, pelaaja: int):
     """Tarkistaa onko kolmen suoraa, jonka molemmilla puolilla vapaa tila.
     """
     arvo = 0
@@ -11,14 +14,14 @@ def tarkista_varma_kolme(lauta):
             lauta[rivi][sarake+1] == lauta[rivi][sarake+2] ==
             lauta[rivi][sarake+3] != 0):
                 if rivi == 5 or (lauta[rivi+1][sarake] != 0 and lauta[rivi+1][sarake+4] != 0):
-                    if lauta[rivi][sarake+1] == 1:
-                        arvo = -np.inf
+                    if lauta[rivi][sarake+1] == pelaaja:
+                        arvo = 500000
                     else:
-                        arvo = np.inf
+                        arvo = -500000
                     return arvo
     return arvo
 
-def pisteytys(lauta):
+def pisteytys(lauta, pelaaja: int):
     """Tarkistaa onko kolmen suoraa.
     """
     arvo = 0
@@ -29,38 +32,38 @@ def pisteytys(lauta):
                 lauta[rivi][sarake+2] != 0):
                 if (sarake-1 in range(SARAKKEET) and lauta[rivi][sarake-1] == 0) or (
                     sarake+3 in range(SARAKKEET) and lauta[rivi][sarake+3] == 0):
-                    if lauta[rivi][sarake+1] == 1:
-                        arvo -= 9000
+                    if lauta[rivi][sarake+1] == pelaaja:
+                        arvo += 10000
                     else:
-                        arvo += 9000
+                        arvo -= 9000
     for rivi in range(RIVIT-2):
         for sarake in range(SARAKKEET):
             if (lauta[rivi][sarake] ==
                 lauta[rivi+1][sarake] ==
                 lauta[rivi+2][sarake] != 0):
                 if rivi-1 in range(RIVIT) and lauta[rivi-1][sarake] == 0:
-                    if lauta[rivi][sarake] == 1:
-                        arvo -= 9000
+                    if lauta[rivi][sarake] == pelaaja:
+                        arvo += 10000
                     else:
-                        arvo += 9000
+                        arvo -= 9000
     for rivi in range (RIVIT-2):
         for sarake in range(SARAKKEET-2):
             if (lauta[rivi][sarake] == lauta[rivi+1][sarake+1] ==
                 lauta[rivi+2][sarake+2] != 0):
                 if (rivi-1 in range(RIVIT) and lauta[rivi-1][sarake-1] == 0) or (
                     rivi+3 in range(RIVIT) and lauta[rivi+3][sarake+3] == 0):
-                    if lauta[rivi][sarake] == 1:
-                        arvo -= 9000
+                    if lauta[rivi][sarake] == pelaaja:
+                        arvo += 10000
                     else:
-                        arvo += 9000
+                        arvo -= 9000
     for rivi in range (2,RIVIT):
         for sarake in range(SARAKKEET-2):
             if (lauta[rivi][sarake] == lauta[rivi-1][sarake+1] ==
             lauta[rivi-2][sarake+2] != 0):
-                if (rivi+1 in range(RIVIT) and lauta[rivi+1][sarake-1] == 0) or (
-                    rivi-3 in range(RIVIT) and lauta[rivi-3][sarake+3] == 0):
-                    if lauta[rivi][sarake] == 1:
-                        arvo -= 9000
+                if ((rivi+1 in range(RIVIT) and sarake-1 in range(SARAKKEET)) and lauta[rivi+1][sarake-1] == 0) or (
+                    (rivi-3 in range(RIVIT) and sarake+3 in range(SARAKKEET)) and lauta[rivi-3][sarake+3] == 0):
+                    if lauta[rivi][sarake] == pelaaja:
+                        arvo += 10000
                     else:
-                        arvo += 9000
+                        arvo -= 9000
     return arvo

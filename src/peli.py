@@ -1,6 +1,7 @@
 from random import randint
 from pelilauta import PeliLauta
-from toiminnot import vapaa_rivi, sallittu_siirto, tarkista_voitto, taynna
+from toiminnot import vapaa_rivi, sallittu_siirto, tarkista_voitto
+from tekoaly.paras_siirto import paras_siirto
 
 class Peli:
     """Luokka vastaa pelin silmukasta.
@@ -29,7 +30,7 @@ class Peli:
         """Pelin silmukka. Kysyy pelaajan siirtoa, kutsuu päivittävät funktiot, tulostaa pelilaudan.
         """
         self.peli.uusi_peli()
-        vuoro = 0
+        vuoro = 42
         kaynnissa = True
         tasapeli = False
         print(self.peli)
@@ -40,15 +41,15 @@ class Peli:
                     print("Valinta ei ole mahdollinen.")
                     continue
             else:
-                sarake = randint(0,6)
+                sarake = paras_siirto(self.peli.lauta, vuoro)
                 if not self.siirto(sarake, 2):
-                    continue
+                    print("ei löydä saraketta")
             if tarkista_voitto(self.peli.lauta, self.peli.viimeisin_siirto):
                 kaynnissa = False
-            if taynna(self.peli.lauta):
+            if vuoro == 1:
                 tasapeli = True
                 kaynnissa = False
-            vuoro += 1
+            vuoro -= 1
             print(self.peli)
         if tasapeli:
             print("Tasapeli!")

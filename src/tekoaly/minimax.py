@@ -1,28 +1,60 @@
 import numpy as np
-from toiminnot import taynna, tarkista_voitto, siirra, vapaa_rivi
+from toiminnot import tarkista_voitto, siirra, vapaa_rivi
+from tekoaly.pisteytys import pisteyta
 
-def minimax(pelilauta, syvyys, ai_vuoro):
-    """Minimax algoritmi. Käy siirrot läpi ja valitsee parhaan vaihtoehdon.
+def minimax(pelilauta, syvyys: int, alfa:float|int, beta: float|int, siirtojen_maara: int, ai_vuoro: bool, edellinen_rivi: int, edellinen_sarake: int):
+    """Minimax algoritmi alfa-beta karsinnalla.
 
     Args:
         pelilauta (_type_): Matriisi pelilaudan tilanteesta.
         syvyys (int): Puun syvyys.
-        ai_vuoro (boolean): Kertoo onko max/ai vuoro.
+        alfa (float or int): Minimiarvo, jonka max varmasti saa. Alkuun -inf.
+        beta (float or int): Enimmäisarvo, jonka min varmasti saa. Alkuun inf.
+        siirtojen_maara (int): Siirtojen määrä tasapeliin.
+        ai_vuoro (boolean): Kertoo onki max/ai vuoro.
+        edellinen_rivi (int): Edellisen siirron rivi.
+        edellinen_sarake (int): Edellisen siirron sarake.
 
     Returns:
-        _type_: Palauttaa heuristisen arvon tai valitun siirron.
+        int or float: Palauttaa heuristisen arvon.
     """
-    if syvyys == 0 or taynna() or tarkista_voitto():
-        # laske arvo
+    pelaaja = 1
+    if ai_vuoro:
+        pelaaja = 2
+    if tarkista_voitto(pelilauta, (edellinen_rivi, edellinen_sarake)):
+        if ai_vuoro:
+            return -500000
+        else:
+            return 500000
+    if syvyys == 0 or siirtojen_maara == 0:
+        arvo = pisteyta(pelilauta, pelaaja)
+        if not ai_vuoro:
+            arvo = -arvo
         return arvo
     if ai_vuoro:
-        arvo = -np.inf
-        for siirto in range(7):
-            # lisää siirto pelilaudalle
-            arvo = max(arvo, minimax(pelilauta, syvyys-1, False))
-        return arvo
-    arvo = np.inf
-    for siirto in range(7):
-        # lisää siirto pelilaudalle
-        arvo = min(arvo, minimax(pelilauta, syvyys-1, True))
-    return arvo
+        paras_arvo = -np.inf
+        for siirto in [3,4,2,5,1,6,0]:
+            kopio_pelilauta = np.copy(pelilauta)
+            rivi = vapaa_rivi(kopio_pelilauta, siirto)
+            if rivi == None:
+                continue
+            siirra(kopio_pelilauta, rivi, siirto, 2)
+            uusi_arvo = minimax(kopio_pelilauta, syvyys-1, alfa, beta, siirtojen_maara-1, False, rivi, siirto)
+            paras_arvo = max(paras_arvo, uusi_arvo)
+            alfa = max(alfa, paras_arvo)
+            if beta <= alfa:
+                break
+        return paras_arvo
+    paras_arvo = np.inf
+    for siirto in [3,4,2,5,1,6,0]:
+        kopio_pelilauta = np.copy(pelilauta)
+        rivi = vapaa_rivi(kopio_pelilauta, siirto)
+        if rivi == None:
+                continue
+        siirra(kopio_pelilauta, rivi, siirto, 1)
+        uusi_arvo = minimax(kopio_pelilauta, syvyys-1, alfa, beta, siirtojen_maara-1, True, rivi, siirto)
+        paras_arvo = min(paras_arvo, uusi_arvo)
+        beta = min(beta, uusi_arvo)
+        if beta <= alfa:
+            break
+    return paras_arvo
