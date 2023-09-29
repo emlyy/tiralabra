@@ -10,3 +10,5 @@ except FileNotFoundError:
 
 RIVIT = int(6)
 SARAKKEET = int(7)
+JARJESTYS = [3,4,2,5,1,6,0]
+SYVYYS = 5

@@ -50,8 +50,10 @@ def pisteytys(lauta, pelaaja: int):
         for sarake in range(SARAKKEET-2):
             if (lauta[rivi][sarake] == lauta[rivi+1][sarake+1] ==
                 lauta[rivi+2][sarake+2] != 0):
-                if (rivi-1 in range(RIVIT) and lauta[rivi-1][sarake-1] == 0) or (
-                    rivi+3 in range(RIVIT) and lauta[rivi+3][sarake+3] == 0):
+                if ((rivi-1 in range(RIVIT) and sarake-1 in range(SARAKKEET)) and
+                    lauta[rivi-1][sarake-1] == 0) or (
+                    (rivi+3 in range(RIVIT) and sarake+3 in range(SARAKKEET)) and
+                    lauta[rivi+3][sarake+3] == 0):
                     if lauta[rivi][sarake] == pelaaja:
                         arvo += 10000
                     else:
@@ -60,8 +62,10 @@ def pisteytys(lauta, pelaaja: int):
         for sarake in range(SARAKKEET-2):
             if (lauta[rivi][sarake] == lauta[rivi-1][sarake+1] ==
             lauta[rivi-2][sarake+2] != 0):
-                if ((rivi+1 in range(RIVIT) and sarake-1 in range(SARAKKEET)) and lauta[rivi+1][sarake-1] == 0) or (
-                    (rivi-3 in range(RIVIT) and sarake+3 in range(SARAKKEET)) and lauta[rivi-3][sarake+3] == 0):
+                if ((rivi+1 in range(RIVIT) and sarake-1 in range(SARAKKEET)) and
+                    lauta[rivi+1][sarake-1] == 0) or (
+                    (rivi-3 in range(RIVIT) and sarake+3 in range(SARAKKEET)) and
+                    lauta[rivi-3][sarake+3] == 0):
                     if lauta[rivi][sarake] == pelaaja:
                         arvo += 10000
                     else:
