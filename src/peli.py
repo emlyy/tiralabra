@@ -1,4 +1,3 @@
-from random import randint
 from pelilauta import PeliLauta
 from toiminnot import vapaa_rivi, sallittu_siirto, tarkista_voitto
 from tekoaly.paras_siirto import paras_siirto
@@ -9,7 +8,7 @@ class Peli:
     def __init__(self) -> None:
         self.peli = PeliLauta()
 
-    def siirto(self, sarake, pelaaja):
+    def siirto(self, sarake: int, pelaaja: int):
         """Kutsuu tarvittavat funktiot siirtoa varten.
 
         Args:

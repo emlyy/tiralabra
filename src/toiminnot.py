@@ -2,7 +2,7 @@ from config import RIVIT, SARAKKEET
 
 """Pelilaudan päivittämiseen liittyviä toimintoja.
 """
-def siirra(lauta, rivi, sarake, vuoro):
+def siirra(lauta, rivi: int, sarake: int, vuoro: int):
     """Päivittää siirron annettuun matriisiin.
 
     Args:
@@ -27,7 +27,7 @@ def taynna(lauta):
             return False
     return True
 
-def sallittu_siirto(lauta, sarake):
+def sallittu_siirto(lauta, sarake: int):
     """Tarkistaa, onko pelilaudalla valitussa sarakkeessa tilaa.
 
     Args:
@@ -42,7 +42,7 @@ def sallittu_siirto(lauta, sarake):
         return lauta[0][sarake] == 0
     return False
 
-def vapaa_rivi(lauta, sarake):
+def vapaa_rivi(lauta, sarake: int):
     """Tarkistaa mihin seuraava pala tiputetaan.
 
     Args:
@@ -57,7 +57,7 @@ def vapaa_rivi(lauta, sarake):
             return rivi
     return None
 
-def tarkista_voitto(lauta, viimeisin_siirto):
+def tarkista_voitto(lauta, viimeisin_siirto: tuple):
     """Tarkistaa onko toinen pelaajista saanut neljän suoran.
 
     Args:

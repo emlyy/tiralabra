@@ -29,7 +29,7 @@ class PeliLauta:
         """
         self.lauta = np.zeros((RIVIT,SARAKKEET), dtype=int)
 
-    def paivita_lauta(self, rivi, sarake, pelaaja):
+    def paivita_lauta(self, rivi: int, sarake: int, pelaaja: int):
         """Päivittää siirron matriisiin. Tallentaa viimeisimmän siirron muuttujaan.
 
         Args:
