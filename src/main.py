@@ -1,11 +1,14 @@
-from peli import Peli
+import pygame
+from kayttoliittyma import Kayttoliittyma
 
 def main():
     """Käynnistää pelin.
     """
-    peli = Peli()
-    print("Tervetuloa pelaamaan Connect Four peliä!")
-    peli.silmukka()
+    peli = Kayttoliittyma()
+    peli.peli_silmukka()
 
 if __name__=="__main__":
-    main()
+    try:
+        main()
+    except pygame.error:
+        print("Suljit pelin!")
