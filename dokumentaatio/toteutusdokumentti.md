@@ -6,13 +6,12 @@ Ohjelman rakennetta kuvaava luokkakaavio:
 ```mermaid
 classDiagram
     Kayttoliittyma "1" -- "1" PeliLauta
-    Kayttoliittyma "1" -- Toiminot
+    Kayttoliittyma "1" -- Toiminnot
     PeliLauta "1" -- Toiminnot
     Kayttoliittyma "1" -- paras_siirto
     Kayttoliittyma <|-- paras_siirto
-    paras_siirto -- minimax
-    minimax <|-- paras_siirto
-    minimax "1" -- "1" PeliLauta
+    paras_siirto <|-- minimax
+    minimax "7" -- "1" paras_siirto
     minimax <|-- pisteytys
     minimax "1" -- pisteytys
     minimax -- Toiminnot
