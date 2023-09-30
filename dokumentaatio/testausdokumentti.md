@@ -7,6 +7,10 @@
 
 [TestToiminnot](/src/tests/toiminnot_test.py)-luokka testaa `Toiminnot`-luokkaa. Testaa, että voitto tarkistetaan oikein, pala tippuu oikealle riville, tallennetaan oikea siirto oikeaan kohtaan, pelilaudalla ei ole tilaa kun se todetaan täydeksi, peli ei hyväksy virheellisiä syötteitä ja jos sarake on täynnä sitä ei voi valita.
 
+[TestParasSiirto](/src/tests/paras_siirto_test.py)-luokka testaa [minimaxin](/src/tekoaly/minimax.py)- ja [paras_siirto](/src/tekoaly/paras_siirto.py) toimintaa. Testaa tilanteita, missä toisella pelaajista on mahdollisuus saada neljän suora. Jos pelaajalla on kolme vierekkäistä tekoäly valitsee blokata neljän suoran. Jos on mahdollista voittaa peli tekoäly valitsee voittavan siirron.
+
+[Käyttöliittymä](/src/kayttoliittyma.py) on testattu käsin.
+
 ## Yksikkötestaus ja testikattavuus
 Yksikkötestaukseen on käytössä pytest. Testit voi ajaa komennolla:
 ```
@@ -18,8 +22,5 @@ poetry run invoke coverage-report
 ```
 
 ## Testikattavuus
-Testikattavuutta laskee se, että en ole saanut vielä [minimax](/src/tekoaly/minimax.py)- ja [paras_siirto](/src/tekoaly/paras_siirto.py)-funktioita valmiiksi, joten molempien testikattavuus on 0%.
-
-
 Tämän hetkinen testikattavuus:
-![testikattavuus](kuvat/coverage_report_23.9.png)
+![testikattavuus](kuvat/coverage_report_30.9.png)

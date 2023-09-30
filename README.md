@@ -12,6 +12,7 @@ Helsingin yliopiston aineopintojen harjoitustyö: Algoritmit ja tekoäly
 - [viikko 1](dokumentaatio/viikkoraportti-1.md)
 - [viikko 2](dokumentaatio/viikkoraportti-2.md)
 - [viikko 3](dokumentaatio/viikkoraportti-3.md)
+- [viikko 4](dokumentaatio/viikkoraportti-4.md)
 
 ## Hyödyllisiä komentoja
 Peli käynnistyy komennolla:
