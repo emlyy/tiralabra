@@ -2,7 +2,7 @@ import pygame
 from pelilauta import PeliLauta
 from tekoaly.paras_siirto import paras_siirto
 from toiminnot import tarkista_voitto, sallittu_siirto, vapaa_rivi
-from config import RIVIT, SARAKKEET, NAYTON_KOKO, FONT, TEKSTI_1_PAIKKA, TEKSTI_2_PAIKKA, SININEN, TUMMAN_SININEN,KELTAINEN, PUNAINEN, MUSTA, HARMAA
+from config import RIVIT, SARAKKEET, NAYTON_KOKO, FONT, TEKSTI_1_PAIKKA, TEKSTI_2_PAIKKA, SININEN, TUMMAN_SININEN,KELTAINEN, PUNAINEN, MUSTA, HARMAA, TEKSTI_3_PAIKKA
 
 class Kayttoliittyma:
     """Luokka vastaa pelin käyttöliittymästä.
@@ -14,6 +14,7 @@ class Kayttoliittyma:
         self.kello = pygame.time.Clock()
         self.kaynnissa = True
         self.tasapeli = False
+        self.resetointi = False
         self.vuoro = 42
         self.numero = -1
         self.ohje_teksti = "Valitse sarake (1-7)."
@@ -46,6 +47,10 @@ class Kayttoliittyma:
             if self.vuoro % 2 == 0:
                 self.numero = -1
                 self.tapahtumat()
+                if self.resetointi:
+                    self.aloita_alusta()
+                    self.peli_silmukka()
+                    break
                 if not self.siirto(self.numero, 1):
                     self.ohje_teksti = "Valinta ei ole mahdollinen. Valitse nmr 1-7."
                     continue
@@ -59,6 +64,10 @@ class Kayttoliittyma:
             self.piirra_naytto()
         while True:
             self.tapahtumat()
+            if self.resetointi:
+                self.aloita_alusta()
+                self.peli_silmukka()
+                break
             if self.tasapeli:
                 self.ohje_teksti = "Tasapeli!"
             else:
@@ -75,15 +84,24 @@ class Kayttoliittyma:
             if tapahtuma.type == pygame.QUIT:
                 self.kaynnissa = False
                 pygame.quit()
-            if self.kaynnissa:
-                if tapahtuma.type == pygame.KEYDOWN:
+            if tapahtuma.type == pygame.KEYDOWN:
+                if tapahtuma.key == pygame.K_ESCAPE:
+                    self.resetointi = True
+                    break
+                if self.kaynnissa:
                     if self.vuoro % 2 == 0:
                         self.numero = (tapahtuma.key-49)
 
-    def valikko(self):
-        """Tämä tulee vastaamaan aloita alusta yms toiminnoista.
+    def aloita_alusta(self):
+        """Aloittaa pelin alusta.
         """
-        pass
+        self.resetointi = False
+        self.kaynnissa = True
+        self.tasapeli = False
+        self.vuoro = 42
+        self.numero = -1
+        self.peli.uusi_peli()
+        self.ohje_teksti = "Valitse sarake (1-7)."
 
     def piirra_naytto(self):
         """Piirtää laudan ja tekstit.
@@ -101,10 +119,12 @@ class Kayttoliittyma:
                 pygame.draw.circle(self.naytto, väri, (30+51*(sarake+1), 30+51*(rivi+1)),23)
                 teksti = self.font.render(str(sarake+1), True, MUSTA)
                 self.naytto.blit(teksti, (25+51*(sarake+1), 360))
-        teksti_1 = self.font.render("Tervetuloa!", True, MUSTA)
+        teksti_1 = self.font.render("Tervetuloa!", True, MUSTA) 
         self.naytto.blit(teksti_1, (TEKSTI_1_PAIKKA))
         teksti_2 = self.font.render(self.ohje_teksti, True, MUSTA)
         self.naytto.blit(teksti_2, (TEKSTI_2_PAIKKA))
+        teksti_3 = self.font.render("Aloita peli alusta painamalla ESC.", True, MUSTA) 
+        self.naytto.blit(teksti_3, (TEKSTI_3_PAIKKA))
         pygame.display.update()
         self.kello.tick(60)
 
