@@ -1,6 +1,7 @@
 import numpy as np
 from toiminnot import tarkista_voitto, siirra, vapaa_rivi
 from tekoaly.pisteytys import pisteyta
+from config import JARJESTYS
 
 def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
             siirtojen_maara: int, ai_vuoro: bool, edellinen_rivi: int, edellinen_sarake: int):
@@ -33,7 +34,7 @@ def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
         return arvo
     if ai_vuoro:
         paras_arvo = -np.inf
-        for siirto in [3,4,2,5,1,6,0]:
+        for siirto in JARJESTYS:
             kopio_pelilauta = np.copy(pelilauta)
             rivi = vapaa_rivi(kopio_pelilauta, siirto)
             if rivi is None:
@@ -47,7 +48,7 @@ def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
                 break
         return paras_arvo
     paras_arvo = np.inf
-    for siirto in [3,4,2,5,1,6,0]:
+    for siirto in JARJESTYS:
         kopio_pelilauta = np.copy(pelilauta)
         rivi = vapaa_rivi(kopio_pelilauta, siirto)
         if rivi is None:
