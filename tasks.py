@@ -19,3 +19,7 @@ def coverage_report(ctx):
 @task
 def lint(ctx):
     ctx.run("pylint src", pty=True)
+
+@task
+def suorituskyky(ctx):
+    ctx.run("python3 src/suorituskykytestit.py", pty=True)

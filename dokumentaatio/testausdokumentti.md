@@ -24,3 +24,19 @@ poetry run invoke coverage-report
 ## Testikattavuus
 Tämän hetkinen testikattavuus:
 ![testikattavuus](kuvat/coverage_report_30.9.png)
+
+## Suorituskykytestaus
+Minimaxin suorituskykytestaukseen on käytössä [minimax_suoritus_aika](/src/suorituskykytestit.py)-funktio, jonka avulla mitataan kuinka kauan minimaxilla kestää käydä siirtovaihtoehdot läpi tietyllä syvyydellä.
+Suorituskykytestit voi ajaa komennolla:
+```
+poetry run invoke suorituskyky
+```
+Esimerkki tämänhetkisistä tuloksista:
+```
+Syvyys 5 kesto: 0.0416s
+Syvyys 6 kesto: 0.0536s
+Syvyys 7 kesto: 0.149s
+Syvyys 8 kesto: 0.36s
+Syvyys 9 kesto: 1.3s
+Syvyys 10 kesto: 3.39s
+```
