@@ -16,14 +16,6 @@ class PeliLauta:
         self.lauta = None
         self.viimeisin_siirto = None
 
-    def __str__(self):
-        """Palauttaa pelin tulostettavassa muodossa.
-
-        Returns:
-            str: otsikko Connect Four ja pelilauta
-        """
-        return f"Connect Four \n {self.lauta}"
-
     def uusi_peli(self):
         """Luo uuden pelilaudan.
         """

@@ -13,20 +13,6 @@ def siirra(lauta, rivi: int, sarake: int, vuoro: int):
     """
     lauta[rivi][sarake] = vuoro
 
-def taynna(lauta):
-    """Tarkistaa onko pelilauta täynnä.
-
-    Args:
-        lauta: Pelilaudan tilannetta kuvaava matriisi.
-
-    Returns:
-        boolean: Palauttaa False niin kauan, kun lauta ei ole täynnä.
-    """
-    for sarake in range(SARAKKEET):
-        if lauta[0][sarake] == 0:
-            return False
-    return True
-
 def sallittu_siirto(lauta, sarake: int):
     """Tarkistaa, onko pelilaudalla valitussa sarakkeessa tilaa.
 
