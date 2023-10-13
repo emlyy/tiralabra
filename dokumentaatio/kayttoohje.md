@@ -12,4 +12,5 @@ poetry run invoke start
 ```
 
 ## Peli
-- Voit valita sarakkeen painamalla 1-7 näppäimistöllä.
+- Valitse ensin haluatko aloittaa pelin. (Painamalla k aloittaa, p tietokone aloittaa pelin.)
+- Voit valita seuraavan siirtosi liikuttamalla ja painamalla hiirtä.

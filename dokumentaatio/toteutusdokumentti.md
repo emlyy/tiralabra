@@ -38,7 +38,8 @@ classDiagram
 ## Aika- ja tilavaativuudet
 
 ## Työn mahdolliset puutteet ja parannusehdotukset
-- Minimax käy vaihtoehdot aina keskeltä ulospäin, jotta voidaan käydä isompi syvyys.
-- Pelivalikko, mahdollisuus aloitta alusta/uudelleen
+- Mahdollisuus palata takaisin aloitusnäytölle.
+- Seuraavaksi tiputettava pala liikkuu pelilaudan ulkopuollelle.
+- Minimax valitsee varman myöhemmän voiton heti pelattavan voiton sijaan joskus.
 
 ## Lähteet

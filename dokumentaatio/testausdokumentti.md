@@ -23,7 +23,7 @@ poetry run invoke coverage-report
 
 ## Testikattavuus
 Tämän hetkinen testikattavuus:
-![testikattavuus](kuvat/coverage_report_30.9.png)
+![testikattavuus](kuvat/coverage_report_14.10.png)
 
 ## Suorituskykytestaus
 Minimaxin suorituskykytestaukseen on käytössä [minimax_suoritus_aika](/src/suorituskykytestit.py)-funktio, jonka avulla mitataan kuinka kauan minimaxilla kestää käydä siirtovaihtoehdot läpi tietyllä syvyydellä.
