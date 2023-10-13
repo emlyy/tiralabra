@@ -5,6 +5,7 @@ def main():
     """Käynnistää pelin.
     """
     peli = Kayttoliittyma()
+    peli.aloitus_naytto()
     peli.peli_silmukka()
 
 if __name__=="__main__":
