@@ -14,16 +14,6 @@ def paras_siirto(lauta, siirtojen_maara: int):
     Returns:
         int: Palauttaa valitun sarakkeen.
     """
-    paras_arvo = -np.inf
-    paras_valinta = 3
-    for siirto in JARJESTYS:
-        if not sallittu_siirto(lauta, siirto):
-            continue
-        kopio_lauta = np.copy(lauta)
-        rivi = vapaa_rivi(lauta, siirto)
-        siirra(kopio_lauta, rivi, siirto, 2)
-        arvo = minimax(kopio_lauta, SYVYYS, -np.inf, np.inf, siirtojen_maara, False, rivi, siirto)
-        if arvo > paras_arvo:
-            paras_valinta = siirto
-            paras_arvo = arvo
+    kopio_lauta = np.copy(lauta)
+    paras_valinta = minimax(kopio_lauta, SYVYYS, -np.inf, np.inf, siirtojen_maara, True, 0, 0)[1]
     return paras_valinta

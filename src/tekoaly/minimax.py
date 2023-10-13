@@ -25,13 +25,13 @@ def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
         pelaaja = 2
     if tarkista_voitto(pelilauta, (edellinen_rivi, edellinen_sarake)):
         if ai_vuoro:
-            return -500000
-        return 500000
+            return -500000, None
+        return 500000, None
     if syvyys == 0 or siirtojen_maara == 0:
         arvo = pisteyta(pelilauta, pelaaja)
         if not ai_vuoro:
             arvo = -arvo
-        return arvo
+        return arvo, None
     if ai_vuoro:
         paras_arvo = -np.inf
         for siirto in JARJESTYS:
@@ -41,12 +41,14 @@ def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
                 continue
             siirra(kopio_pelilauta, rivi, siirto, 2)
             uusi_arvo = minimax(kopio_pelilauta, syvyys-1, alfa, beta, siirtojen_maara-1, False,
-                                rivi, siirto)
-            paras_arvo = max(paras_arvo, uusi_arvo)
+                                rivi, siirto)[0]
+            if uusi_arvo > paras_arvo:
+                paras_valinta = siirto
+                paras_arvo = uusi_arvo
             alfa = max(alfa, paras_arvo)
             if beta <= alfa:
                 break
-        return paras_arvo
+        return paras_arvo, paras_valinta
     paras_arvo = np.inf
     for siirto in JARJESTYS:
         kopio_pelilauta = np.copy(pelilauta)
@@ -55,9 +57,11 @@ def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
                 continue
         siirra(kopio_pelilauta, rivi, siirto, 1)
         uusi_arvo = minimax(kopio_pelilauta, syvyys-1, alfa, beta, siirtojen_maara-1, True, rivi,
-                            siirto)
-        paras_arvo = min(paras_arvo, uusi_arvo)
+                            siirto)[0]
+        if uusi_arvo < paras_arvo:
+            paras_valinta = siirto
+            paras_arvo = uusi_arvo
         beta = min(beta, uusi_arvo)
         if beta <= alfa:
             break
-    return paras_arvo
+    return paras_arvo, paras_valinta
