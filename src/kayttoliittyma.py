@@ -90,12 +90,7 @@ class Kayttoliittyma:
             # Tietokoneen vuoro; etsitään paras siirto minimaxilla
             else:
                 self.tapahtumat()
-                #suorituskykyä vähän
-                aloitus_aika = time.perf_counter()
                 sarake = paras_siirto(self.peli.lauta, self.vuoro)
-                lopetus_aika = time.perf_counter()
-                kesto = lopetus_aika - aloitus_aika
-                print(f"kesto: {kesto:.3}s")
                 if not self.siirto(sarake, 2):
                     self.ohje_teksti = "ongelma"
                     continue
