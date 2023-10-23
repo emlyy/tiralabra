@@ -1,9 +1,10 @@
 import pygame
-import time
 from pelilauta import PeliLauta
-from tekoaly.paras_siirto import paras_siirto
+from tekoaly.minimax import paras_siirto
 from toiminnot import tarkista_voitto, sallittu_siirto, vapaa_rivi
-from config import RIVIT, SARAKKEET, NAYTON_KOKO, FONT, TEKSTI_1_PAIKKA, TEKSTI_2_PAIKKA, SININEN, TUMMAN_SININEN, KELTAINEN, PUNAINEN, MUSTA, HARMAA, TEKSTI_3_PAIKKA
+from config import (RIVIT, SARAKKEET, NAYTON_KOKO, FONT, TEKSTI_1_PAIKKA,
+    TEKSTI_2_PAIKKA, SININEN, TUMMAN_SININEN, KELTAINEN,
+    PUNAINEN, MUSTA, HARMAA, TEKSTI_3_PAIKKA, VALITSE, LAUTA_X, LAUTA_Y, LEVEYS, KORKEUS, REUNA, HALKASIJA, LISA_X)
 
 class Kayttoliittyma:
     """Luokka vastaa pelin käyttöliittymästä.
@@ -20,7 +21,10 @@ class Kayttoliittyma:
         self.vuoro = 42
         self.numero = -1
         self.hiiri = (250,0)
-        self.ohje_teksti = "Valitse sarake (1-7)."
+        self.pelaaja_vari = KELTAINEN
+        self.ai_vari = PUNAINEN
+        self.vuoro_lisa = 0
+        self.ohje_teksti = VALITSE
         self.font = pygame.font.SysFont(FONT, 28)
         pygame.display.set_caption("Connect Four")
 
@@ -94,7 +98,7 @@ class Kayttoliittyma:
                 if not self.siirto(sarake, 2):
                     self.ohje_teksti = "ongelma"
                     continue
-                self.ohje_teksti = "Valitse sarake!"
+                self.ohje_teksti = VALITSE
             self.paivita()
             self.piirra_naytto()
         self.lopetus_naytto()
@@ -120,9 +124,11 @@ class Kayttoliittyma:
                 # Päivitetään pelaajan hiiren sijainti seuraavaa siirtoa varten
                 if (self.vuoro+self.vuoro_lisa) % 2 == 0:
                     if tapahtuma.type == pygame.MOUSEMOTION:
-                        self.hiiri = pygame.mouse.get_pos()
+                        hiiri = pygame.mouse.get_pos()
+                        if REUNA <= hiiri[0] <= LAUTA_X+LEVEYS:
+                            self.hiiri = hiiri
                     if tapahtuma.type == pygame.MOUSEBUTTONDOWN:
-                        self.numero = ((self.hiiri[0]-75)//50)
+                        self.numero = (self.hiiri[0]-REUNA)//HALKASIJA
 
     def valitse(self, valinta):
         """Alustukset sen mukaan kumpi aloittaa.
@@ -150,17 +156,17 @@ class Kayttoliittyma:
         self.vuoro = 42
         self.numero = -1
         self.peli.uusi_peli()
-        self.ohje_teksti = "Valitse sarake."
+        self.ohje_teksti = VALITSE
 
     def piirra_aloitus_naytto(self):
         """Piirtää aloitusnäytön.
         """
         self.naytto.fill(HARMAA)
-        teksti_1 = self.font.render("Tervetuloa!", True, MUSTA) 
+        teksti_1 = self.font.render("Tervetuloa!", True, MUSTA)
         self.naytto.blit(teksti_1, (TEKSTI_1_PAIKKA))
-        teksti_2 = self.font.render("paina k jos haluat aloittaa", True, MUSTA) 
+        teksti_2 = self.font.render("paina k jos haluat aloittaa", True, MUSTA)
         self.naytto.blit(teksti_2, (10,100))
-        teksti_3 = self.font.render("paina p jos haluat ai:n aloittavan", True, MUSTA) 
+        teksti_3 = self.font.render("paina p jos haluat ai:n aloittavan", True, MUSTA)
         self.naytto.blit(teksti_3, (10,150))
         pygame.display.update()
 
@@ -169,21 +175,21 @@ class Kayttoliittyma:
         """
         self.naytto.fill(HARMAA)
         self.piirra_pelilauta()
-        teksti_1 = self.font.render("Tervetuloa!", True, MUSTA) 
+        teksti_1 = self.font.render("Tervetuloa!", True, MUSTA)
         self.naytto.blit(teksti_1, (TEKSTI_1_PAIKKA))
         teksti_2 = self.font.render(self.ohje_teksti, True, MUSTA)
         self.naytto.blit(teksti_2, (TEKSTI_2_PAIKKA))
-        teksti_3 = self.font.render("Aloita peli alusta painamalla ESC.", True, MUSTA) 
+        teksti_3 = self.font.render("Aloita peli alusta painamalla ESC.", True, MUSTA)
         self.naytto.blit(teksti_3, (TEKSTI_3_PAIKKA))
         pygame.display.update()
-        self.kello.tick(60)
+        self.kello.tick(30)
 
     def piirra_pelilauta(self):
         """Vastaa pelilaudan piirtämisestä.
         """
-        pygame.draw.rect(self.naytto, SININEN, pygame.Rect(75, 100, 350, 300))
+        pygame.draw.rect(self.naytto, SININEN, pygame.Rect(LAUTA_X, LAUTA_Y, LEVEYS, KORKEUS))
         if (self.vuoro+self.vuoro_lisa) % 2 == 0:
-            pygame.draw.circle(self.naytto, self.pelaaja_vari, (self.hiiri[0], 50),23)
+            pygame.draw.circle(self.naytto, self.pelaaja_vari, (self.hiiri[0], 125),HALKASIJA/2)
         for rivi in range(RIVIT):
             for sarake in range(SARAKKEET):
                 if self.peli.lauta[rivi][sarake] == 1:
@@ -192,16 +198,14 @@ class Kayttoliittyma:
                     väri = self.ai_vari
                 else:
                     väri = TUMMAN_SININEN
-                pygame.draw.circle(self.naytto, väri, (49+50*(sarake+1), 76+50*(rivi+1)),23)
-                teksti = self.font.render(str(sarake+1), True, MUSTA)
-                self.naytto.blit(teksti, (43+50*(sarake+1), 400))
+                pygame.draw.circle(self.naytto, väri, (LISA_X+(HALKASIJA+2)*(sarake+1), REUNA+(HALKASIJA+2)*(rivi+1)),HALKASIJA/2)
 
     def paivita(self):
         """Tarkistaa voiton ja tasapelin. Päivittää vuoron.
         """
         if tarkista_voitto(self.peli.lauta, self.peli.viimeisin_siirto):
             self.kaynnissa = False
-        if self.vuoro == 1:
+        if self.vuoro == 1 and self.kaynnissa:
             self.tasapeli = True
             self.kaynnissa = False
         self.vuoro -= 1

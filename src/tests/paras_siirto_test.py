@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from tekoaly.paras_siirto import paras_siirto
+from tekoaly.minimax import paras_siirto
 
 class TestParasSiirto(unittest.TestCase):
     def setUp(self):
