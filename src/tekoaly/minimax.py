@@ -1,7 +1,22 @@
 import numpy as np
 from toiminnot import tarkista_voitto, siirra, vapaa_rivi
 from tekoaly.pisteytys import pisteyta
-from config import JARJESTYS
+from config import SYVYYS, JARJESTYS
+
+def paras_siirto(lauta, siirtojen_maara: int):
+    """Kokeilee siirtovaihtoehdot keskeltä ulospäin käyttäen minimax algoritmia ja
+       valitsee parhaan siirron.
+
+    Args:
+        lauta (_type_): Pelilaudan tämänhetkinen tilanne.
+        siirtojen_maara (int): Kertoo kuinka monta siirtoa on jäljellä tasapeliin.
+
+    Returns:
+        int: Palauttaa valitun sarakkeen.
+    """
+    kopio_lauta = np.copy(lauta)
+    paras_valinta = minimax(kopio_lauta, int(SYVYYS), -np.inf, np.inf, siirtojen_maara, True, 0, 0)[1]
+    return paras_valinta
 
 def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
             siirtojen_maara: int, ai_vuoro: bool, edellinen_rivi: int, edellinen_sarake: int):
@@ -18,15 +33,15 @@ def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
         edellinen_sarake (int): Edellisen siirron sarake.
 
     Returns:
-        int or float: Palauttaa heuristisen arvon.
+        Palauttaa heuristisen arvon ja siirron.
     """
     pelaaja = 1
     if ai_vuoro:
         pelaaja = 2
     if tarkista_voitto(pelilauta, (edellinen_rivi, edellinen_sarake)):
         if ai_vuoro:
-            return -500000, None
-        return 500000, None
+            return -500000*syvyys, None
+        return 500000*syvyys, None
     if syvyys == 0 or siirtojen_maara == 0:
         arvo = pisteyta(pelilauta, pelaaja)
         if not ai_vuoro:
@@ -40,8 +55,7 @@ def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
             if rivi is None:
                 continue
             siirra(kopio_pelilauta, rivi, siirto, 2)
-            uusi_arvo = minimax(kopio_pelilauta, syvyys-1, alfa, beta, siirtojen_maara-1, False,
-                                rivi, siirto)[0]
+            uusi_arvo = minimax(kopio_pelilauta, syvyys-1, alfa, beta, siirtojen_maara-1, False, rivi, siirto)[0]
             if uusi_arvo > paras_arvo:
                 paras_valinta = siirto
                 paras_arvo = uusi_arvo
@@ -54,10 +68,9 @@ def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
         kopio_pelilauta = np.copy(pelilauta)
         rivi = vapaa_rivi(kopio_pelilauta, siirto)
         if rivi is None:
-                continue
+            continue
         siirra(kopio_pelilauta, rivi, siirto, 1)
-        uusi_arvo = minimax(kopio_pelilauta, syvyys-1, alfa, beta, siirtojen_maara-1, True, rivi,
-                            siirto)[0]
+        uusi_arvo = minimax(kopio_pelilauta, syvyys-1, alfa, beta, siirtojen_maara-1, True, rivi, siirto)[0]
         if uusi_arvo < paras_arvo:
             paras_valinta = siirto
             paras_arvo = uusi_arvo

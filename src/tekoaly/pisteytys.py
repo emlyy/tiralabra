@@ -1,11 +1,23 @@
 from config import RIVIT, SARAKKEET
 
 def pisteyta(lauta, pelaaja: int):
-    arvo = tarkista_varma_kolme(lauta, pelaaja) + pisteytys(lauta, pelaaja)
+    """Arvioi pelaajan aseman pelissä.
+
+    Args:
+        lauta (_type_): Pelilaudan tilannetta kuvaava matriisi.
+        pelaaja (int): Kumman näkökulmasta peliä arvioidaan. 1: pelaaja, 2: tekoäly.
+
+    Returns:
+        int: Palauttaa lasketun arvon. Mitä suurempi arvo sitä paremmassa asemassa
+        arvioitava pelaaja on.
+    """
+    arvo = (tarkista_varma_kolme(lauta, pelaaja) + pisteytys_vaaka(lauta, pelaaja) +
+            pisteytys_pysty(lauta, pelaaja) + pisteytys_laskeva_viisto(lauta, pelaaja) +
+            pisteytys_nouseva_viisto(lauta, pelaaja))
     return arvo
 
 def tarkista_varma_kolme(lauta, pelaaja: int):
-    """Tarkistaa onko kolmen suoraa, jonka molemmilla puolilla vapaa tila.
+    """Tarkistaa onko kolmen suoraa, jonka molemmilla puolilla vapaa pelattava tila.
     """
     arvo = 0
     for sarake in range(SARAKKEET-4):
@@ -21,8 +33,8 @@ def tarkista_varma_kolme(lauta, pelaaja: int):
                     return arvo
     return arvo
 
-def pisteytys(lauta, pelaaja: int):
-    """Tarkistaa onko kolmen suoraa.
+def pisteytys_vaaka(lauta, pelaaja):
+    """Tarkistaa onko kolmen vaakasuora, missä toisella puolella vapaa pelattava tila.
     """
     arvo = 0
     for sarake in range(SARAKKEET-2):
@@ -36,6 +48,12 @@ def pisteytys(lauta, pelaaja: int):
                         arvo += 10000
                     else:
                         arvo -= 9000
+    return arvo
+
+def pisteytys_pysty(lauta, pelaaja):
+    """Tarkistaa onko kolmen pystysuora, missä pelattava tila yläpuolella.
+    """
+    arvo = 0
     for rivi in range(RIVIT-2):
         for sarake in range(SARAKKEET):
             if (lauta[rivi][sarake] ==
@@ -46,6 +64,12 @@ def pisteytys(lauta, pelaaja: int):
                         arvo += 10000
                     else:
                         arvo -= 9000
+    return arvo
+
+def pisteytys_laskeva_viisto(lauta, pelaaja):
+    """Tarkistaa onko kolmen suora viistosti, missä toisella puolella vapaa tila.
+    """
+    arvo = 0
     for rivi in range (RIVIT-2):
         for sarake in range(SARAKKEET-2):
             if (lauta[rivi][sarake] == lauta[rivi+1][sarake+1] ==
@@ -58,6 +82,12 @@ def pisteytys(lauta, pelaaja: int):
                         arvo += 10000
                     else:
                         arvo -= 9000
+    return arvo
+
+def pisteytys_nouseva_viisto(lauta, pelaaja):
+    """Tarkistaa onko kolmen suora viistosti, missä toisella puolella vapaa tila.
+    """
+    arvo = 0
     for rivi in range (2,RIVIT):
         for sarake in range(SARAKKEET-2):
             if (lauta[rivi][sarake] == lauta[rivi-1][sarake+1] ==
