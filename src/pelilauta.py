@@ -1,4 +1,3 @@
-import numpy as np
 from toiminnot import siirra
 from config import RIVIT, SARAKKEET
 
@@ -19,7 +18,7 @@ class PeliLauta:
     def uusi_peli(self):
         """Luo uuden pelilaudan.
         """
-        self.lauta = np.zeros((RIVIT,SARAKKEET), dtype=int)
+        self.lauta = [[0 for alkio in range(SARAKKEET)] for alkio in range(RIVIT)]
 
     def paivita_lauta(self, rivi: int, sarake: int, pelaaja: int):
         """Päivittää siirron matriisiin. Tallentaa viimeisimmän siirron muuttujaan.

@@ -1,4 +1,5 @@
 import numpy as np
+from copy import deepcopy
 from toiminnot import tarkista_voitto, siirra, vapaa_rivi
 from tekoaly.pisteytys import pisteyta
 from config import SYVYYS, JARJESTYS
@@ -14,7 +15,7 @@ def paras_siirto(lauta, siirtojen_maara: int):
     Returns:
         int: Palauttaa valitun sarakkeen.
     """
-    kopio_lauta = np.copy(lauta)
+    kopio_lauta = deepcopy(lauta)
     paras_valinta = minimax(kopio_lauta, int(SYVYYS), -np.inf, np.inf, siirtojen_maara, True, 0, 0)[1]
     return paras_valinta
 
@@ -50,7 +51,7 @@ def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
     if ai_vuoro:
         paras_arvo = -np.inf
         for siirto in JARJESTYS:
-            kopio_pelilauta = np.copy(pelilauta)
+            kopio_pelilauta = deepcopy(pelilauta)
             rivi = vapaa_rivi(kopio_pelilauta, siirto)
             if rivi is None:
                 continue
@@ -65,7 +66,7 @@ def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
         return paras_arvo, paras_valinta
     paras_arvo = np.inf
     for siirto in JARJESTYS:
-        kopio_pelilauta = np.copy(pelilauta)
+        kopio_pelilauta = deepcopy(pelilauta)
         rivi = vapaa_rivi(kopio_pelilauta, siirto)
         if rivi is None:
             continue

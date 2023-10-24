@@ -22,13 +22,9 @@ def minimax_suoritus_aika(pelilauta, syvyys, siirtojen_maara, rivi, sarake):
     return f"Syvyys {syvyys} kesto: {kesto:.3}s"
 
 if __name__=="__main__":
-    lauta = np.array([
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 1, 1, 1, 0, 0],
-          [2, 2, 2, 1, 2, 1, 0]])
+    lauta = ([[0, 0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0, 0, 0],[0, 0, 1, 1, 1, 0, 0],[2, 2, 2, 1, 2, 1, 0]])
+    print(minimax_suoritus_aika(lauta, 4, 33, 4, 2))
     print(minimax_suoritus_aika(lauta, 5, 33, 4, 2))
     print(minimax_suoritus_aika(lauta, 6, 33, 4, 2))
     print(minimax_suoritus_aika(lauta, 7, 33, 4, 2))
