@@ -5,6 +5,10 @@ def start(ctx):
     ctx.run("python3 src/main.py", pty=True)
 
 @task
+def tekoaly(ctx):
+    ctx.run("python3 src/ai_vs_ai.py", pty=True)
+
+@task
 def test(ctx):
     ctx.run("pytest src", pty=True)
 
