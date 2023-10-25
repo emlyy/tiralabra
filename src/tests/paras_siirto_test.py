@@ -91,7 +91,7 @@ class TestParasSiirto(unittest.TestCase):
                 [0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 1, 2, 0, 0],
-                [0, 0, 0, np.array1, 2, 0, 0],
+                [0, 0, 0, 1, 2, 0, 0],
                 [0, 0, 0, 1, 2, 0, 0]])
         self.siirto = paras_siirto(lauta, 36)
         self.assertEqual(self.siirto, 4)
