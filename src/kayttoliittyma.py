@@ -25,7 +25,8 @@ class Kayttoliittyma:
         self.ai_vari = PUNAINEN
         self.vuoro_lisa = 0
         self.ohje_teksti = VALITSE
-        self.font = pygame.font.SysFont(FONT, 28)
+        self.teksti_vari = MUSTA
+        self.font = pygame.font.SysFont(FONT, 40)
         pygame.display.set_caption("Connect Four")
 
     def siirto(self, sarake: int, pelaaja: int):
@@ -68,8 +69,10 @@ class Kayttoliittyma:
             else:
                 if (self.vuoro+self.vuoro_lisa) % 2 == 0:
                     self.ohje_teksti = "Hävisit!"
+                    self.teksti_vari = PUNAINEN
                 else:
                     self.ohje_teksti = "Voitit Pelin! :D"
+                    self.teksti_vari = SININEN
             self.piirra_naytto()
 
     def peli_silmukka(self):
@@ -177,7 +180,7 @@ class Kayttoliittyma:
         self.piirra_pelilauta()
         teksti_1 = self.font.render("Tervetuloa!", True, MUSTA)
         self.naytto.blit(teksti_1, (TEKSTI_1_PAIKKA))
-        teksti_2 = self.font.render(self.ohje_teksti, True, MUSTA)
+        teksti_2 = self.font.render(self.ohje_teksti, True, self.teksti_vari)
         self.naytto.blit(teksti_2, (TEKSTI_2_PAIKKA))
         teksti_3 = self.font.render("Aloita peli alusta painamalla ESC.", True, MUSTA)
         self.naytto.blit(teksti_3, (TEKSTI_3_PAIKKA))

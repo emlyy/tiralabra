@@ -5,8 +5,6 @@ class PeliLauta:
     """Luokka vastaa pelilaudan päivityksestä.
 
     Attributes:
-        rivit: rivien lkm pelilaudalla
-        sarakkeet: sarakkeiden lkm pelilaudalla
         lauta: Pelilaudan tilannetta kuvaava matriisi. Aluksi kaikki
             tilat tyhjiä eli 0. 1: pelaaja. 2: tekoäly.
         viimeisin_siirto: tuple, (x,y) missä x rivi ja y sarake.
