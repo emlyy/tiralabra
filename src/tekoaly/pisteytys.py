@@ -1,6 +1,6 @@
 from config import RIVIT, SARAKKEET
 
-def pisteyta(lauta, pelaaja: int):
+def pisteyta(lauta, pelaaja, syvyys):
     """Arvioi pelaajan aseman pelissä.
 
     Args:
@@ -11,12 +11,12 @@ def pisteyta(lauta, pelaaja: int):
         int: Palauttaa lasketun arvon. Mitä suurempi arvo sitä paremmassa asemassa
         arvioitava pelaaja on.
     """
-    arvo = (tarkista_varma_kolme(lauta, pelaaja) + pisteytys_vaaka(lauta, pelaaja) +
+    arvo = (tarkista_varma_kolme(lauta, pelaaja, syvyys) + pisteytys_vaaka(lauta, pelaaja) +
             pisteytys_pysty(lauta, pelaaja) + pisteytys_laskeva_viisto(lauta, pelaaja) +
             pisteytys_nouseva_viisto(lauta, pelaaja))
     return arvo
 
-def tarkista_varma_kolme(lauta, pelaaja: int):
+def tarkista_varma_kolme(lauta, pelaaja, syvyys):
     """Tarkistaa onko kolmen suoraa, jonka molemmilla puolilla vapaa pelattava tila.
     """
     arvo = 0
@@ -27,9 +27,9 @@ def tarkista_varma_kolme(lauta, pelaaja: int):
             lauta[rivi][sarake+3] != 0):
                 if rivi == 5 or (lauta[rivi+1][sarake] != 0 and lauta[rivi+1][sarake+4] != 0):
                     if lauta[rivi][sarake+1] == pelaaja:
-                        arvo = 500000
+                        arvo = 500000*(syvyys+1)
                     else:
-                        arvo = -500000
+                        arvo = -500000*(syvyys+1)
                     return arvo
     return arvo
 

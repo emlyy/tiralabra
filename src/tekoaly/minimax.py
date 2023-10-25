@@ -41,10 +41,10 @@ def minimax(pelilauta, syvyys: int, alfa: float|int, beta: float|int,
         pelaaja = 2
     if tarkista_voitto(pelilauta, (edellinen_rivi, edellinen_sarake)):
         if ai_vuoro:
-            return -500000*syvyys, None
-        return 500000*syvyys, None
+            return -500000*(syvyys+1), None
+        return 500000*(syvyys+1), None
     if syvyys == 0 or siirtojen_maara == 0:
-        arvo = pisteyta(pelilauta, pelaaja)
+        arvo = pisteyta(pelilauta, pelaaja, syvyys)
         if not ai_vuoro:
             arvo = -arvo
         return arvo, None
