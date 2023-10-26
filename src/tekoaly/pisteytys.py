@@ -1,10 +1,10 @@
 from config import RIVIT, SARAKKEET
 
-def pisteyta(lauta, pelaaja, syvyys):
+def pisteyta(lauta: list, pelaaja: int, syvyys: int):
     """Arvioi pelaajan aseman pelissä.
 
     Args:
-        lauta (_type_): Pelilaudan tilannetta kuvaava matriisi.
+        lauta (list): Pelilaudan tilannetta kuvaava matriisi.
         pelaaja (int): Kumman näkökulmasta peliä arvioidaan. 1: pelaaja, 2: tekoäly.
 
     Returns:
@@ -16,7 +16,7 @@ def pisteyta(lauta, pelaaja, syvyys):
             pisteytys_nouseva_viisto(lauta, pelaaja))
     return arvo
 
-def tarkista_varma_kolme(lauta, pelaaja, syvyys):
+def tarkista_varma_kolme(lauta: list, pelaaja: int, syvyys: int):
     """Tarkistaa onko kolmen suoraa, jonka molemmilla puolilla vapaa pelattava tila.
     """
     arvo = 0
@@ -33,7 +33,7 @@ def tarkista_varma_kolme(lauta, pelaaja, syvyys):
                     return arvo
     return arvo
 
-def pisteytys_vaaka(lauta, pelaaja):
+def pisteytys_vaaka(lauta: list, pelaaja: int):
     """Tarkistaa onko kolmen vaakasuora, missä toisella puolella vapaa pelattava tila.
     """
     arvo = 0
@@ -50,7 +50,7 @@ def pisteytys_vaaka(lauta, pelaaja):
                         arvo -= 9000
     return arvo
 
-def pisteytys_pysty(lauta, pelaaja):
+def pisteytys_pysty(lauta: list, pelaaja: int):
     """Tarkistaa onko kolmen pystysuora, missä pelattava tila yläpuolella.
     """
     arvo = 0
@@ -66,7 +66,7 @@ def pisteytys_pysty(lauta, pelaaja):
                         arvo -= 9000
     return arvo
 
-def pisteytys_laskeva_viisto(lauta, pelaaja):
+def pisteytys_laskeva_viisto(lauta: list, pelaaja: int):
     """Tarkistaa onko kolmen suora viistosti, missä toisella puolella vapaa tila.
     """
     arvo = 0
@@ -84,7 +84,7 @@ def pisteytys_laskeva_viisto(lauta, pelaaja):
                         arvo -= 9000
     return arvo
 
-def pisteytys_nouseva_viisto(lauta, pelaaja):
+def pisteytys_nouseva_viisto(lauta: list, pelaaja: int):
     """Tarkistaa onko kolmen suora viistosti, missä toisella puolella vapaa tila.
     """
     arvo = 0

@@ -1,23 +1,21 @@
 from config import RIVIT, SARAKKEET
 
-"""Pelilaudan päivittämiseen liittyviä toimintoja.
-"""
-def siirra(lauta, rivi: int, sarake: int, vuoro: int):
+def siirra(lauta: list, rivi: int, sarake: int, vuoro: int):
     """Päivittää siirron annettuun matriisiin.
 
     Args:
-        lauta (_type_): Pelilaudan tilannetta kuvaava matriisi.
+        lauta (list): Pelilaudan tilannetta kuvaava matriisi.
         rivi (int): Rivi johon pala tippuu.
         sarake (int): Valittu sarake.
         vuoro (int): Pelaajan vuoro: 1. Tietokoneen vuoro: 2.
     """
     lauta[rivi][sarake] = vuoro
 
-def sallittu_siirto(lauta, sarake: int):
+def sallittu_siirto(lauta: list, sarake: int):
     """Tarkistaa, onko pelilaudalla valitussa sarakkeessa tilaa.
 
     Args:
-        lauta: Pelilaudan tilannetta kuvaava matriisi.
+        lauta (list): Pelilaudan tilannetta kuvaava matriisi.
         sarake (int): Valittu sarake.
 
     Returns:
@@ -28,11 +26,11 @@ def sallittu_siirto(lauta, sarake: int):
         return lauta[0][sarake] == 0
     return False
 
-def vapaa_rivi(lauta, sarake: int):
+def vapaa_rivi(lauta: list, sarake: int):
     """Tarkistaa mihin seuraava pala tiputetaan.
 
     Args:
-        lauta: Pelilaudan tilannetta kuvaava matriisi.
+        lauta (list): Pelilaudan tilannetta kuvaava matriisi.
         sarake (int): Valittu sarake.
 
     Returns:
@@ -43,11 +41,11 @@ def vapaa_rivi(lauta, sarake: int):
             return rivi
     return None
 
-def tarkista_voitto(lauta, viimeisin_siirto: tuple):
+def tarkista_voitto(lauta: list, viimeisin_siirto: tuple):
     """Tarkistaa onko toinen pelaajista saanut neljän suoran.
 
     Args:
-        lauta: Pelilaudan tilannetta kuvaava matriisi.
+        lauta (list): Pelilaudan tilannetta kuvaava matriisi.
         viimeisin_siirto (tuple): (x,y) missä x rivi ja y sarake.
 
     Returns:

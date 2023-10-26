@@ -3,8 +3,9 @@ from pelilauta import PeliLauta
 from tekoaly.minimax import paras_siirto
 from toiminnot import tarkista_voitto, sallittu_siirto, vapaa_rivi
 from config import (RIVIT, SARAKKEET, NAYTON_KOKO, FONT, TEKSTI_1_PAIKKA,
-    TEKSTI_2_PAIKKA, SININEN, TUMMAN_SININEN, KELTAINEN,
-    PUNAINEN, MUSTA, HARMAA, TEKSTI_3_PAIKKA, VALITSE, LAUTA_X, LAUTA_Y, LEVEYS, KORKEUS, REUNA, HALKASIJA, LISA_X)
+    TEKSTI_2_PAIKKA, SININEN, TUMMAN_SININEN, KELTAINEN, PUNAINEN, MUSTA,
+    HARMAA, TEKSTI_3_PAIKKA, VALITSE, LAUTA_X, LAUTA_Y, LEVEYS, KORKEUS,
+    REUNA, HALKASIJA, LISA_X)
 
 class Kayttoliittyma:
     """Luokka vastaa pelin käyttöliittymästä.
@@ -133,7 +134,7 @@ class Kayttoliittyma:
                     if tapahtuma.type == pygame.MOUSEBUTTONDOWN:
                         self.numero = (self.hiiri[0]-REUNA)//HALKASIJA
 
-    def valitse(self, valinta):
+    def valitse(self, valinta: int):
         """Alustukset sen mukaan kumpi aloittaa.
 
         Args:
@@ -201,7 +202,9 @@ class Kayttoliittyma:
                     väri = self.ai_vari
                 else:
                     väri = TUMMAN_SININEN
-                pygame.draw.circle(self.naytto, väri, (LISA_X+(HALKASIJA+2)*(sarake+1), REUNA+(HALKASIJA+2)*(rivi+1)),HALKASIJA/2)
+                pygame.draw.circle(self.naytto, väri,
+                    (LISA_X+(HALKASIJA+2)*(sarake+1), REUNA+(HALKASIJA+2)*(rivi+1)),
+                    HALKASIJA/2)
 
     def paivita(self):
         """Tarkistaa voiton ja tasapelin. Päivittää vuoron.

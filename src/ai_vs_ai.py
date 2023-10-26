@@ -1,15 +1,15 @@
+from copy import deepcopy
 import pygame
 import numpy as np
-from copy import deepcopy
 from pelilauta import PeliLauta
 from tekoaly.minimax import minimax
 from toiminnot import tarkista_voitto, sallittu_siirto, vapaa_rivi
-from kayttoliittyma import Kayttoliittyma
 from config import (RIVIT, SARAKKEET, NAYTON_KOKO, FONT, TEKSTI_1_PAIKKA,
     TEKSTI_2_PAIKKA, SININEN, TUMMAN_SININEN, SYVYYS_KELT, SYVYYS_PUN, KELTAINEN,
-    PUNAINEN, MUSTA, HARMAA, TEKSTI_3_PAIKKA, LAUTA_X, LAUTA_Y, LEVEYS, KORKEUS, REUNA, HALKASIJA, LISA_X)
+    PUNAINEN, MUSTA, HARMAA, TEKSTI_3_PAIKKA, LAUTA_X, LAUTA_Y, LEVEYS, KORKEUS,
+    REUNA, HALKASIJA, LISA_X)
 
-class Tekoaly_Peli:
+class TekoalyPeli:
     """Käyttöliittymä tekoäly vastaan tekoäly pelille.
     """
     def __init__(self):
@@ -136,7 +136,9 @@ class Tekoaly_Peli:
                     väri = PUNAINEN
                 else:
                     väri = TUMMAN_SININEN
-                pygame.draw.circle(self.naytto, väri, (LISA_X+(HALKASIJA+2)*(sarake+1), REUNA+(HALKASIJA+2)*(rivi+1)),HALKASIJA/2)
+                pygame.draw.circle(self.naytto, väri,
+                    (LISA_X+(HALKASIJA+2)*(sarake+1), REUNA+(HALKASIJA+2)*(rivi+1)),
+                    HALKASIJA/2)
 
     def paivita(self):
         """Tarkistaa voiton ja tasapelin. Päivittää vuoron.
@@ -149,13 +151,13 @@ class Tekoaly_Peli:
         self.vuoro -= 1
         if self.vuoro % 2 != 0:
             self.ohje_teksti = "Punaisen vuoro"
-    
-    def paras_siirto(self, lauta, siirtojen_maara: int, syvyys):
+
+    def paras_siirto(self, lauta: list, siirtojen_maara: int, syvyys: int):
         """Kokeilee siirtovaihtoehdot keskeltä ulospäin käyttäen minimax algoritmia ja
         valitsee parhaan siirron.
 
         Args:
-        lauta (_type_): Pelilaudan tämänhetkinen tilanne.
+        lauta (list): Pelilaudan tämänhetkinen tilanne.
         siirtojen_maara (int): Kertoo kuinka monta siirtoa on jäljellä tasapeliin.
         syvyys (int): syvyys mikä halutaan käydä läpi minimaxilla
 
@@ -164,15 +166,17 @@ class Tekoaly_Peli:
         """
         kopio_lauta = deepcopy(lauta)
         if siirtojen_maara % 2 == 0:
-            paras_valinta = minimax(kopio_lauta, int(syvyys), -np.inf, np.inf, siirtojen_maara, False, 0, 0)[1]
+            paras_valinta = (
+                minimax(kopio_lauta, int(syvyys), -np.inf, np.inf, siirtojen_maara, False, 0, 0)[1])
             return paras_valinta
-        paras_valinta = minimax(kopio_lauta, int(syvyys), -np.inf, np.inf, siirtojen_maara, True, 0, 0)[1]
+        paras_valinta = (
+            minimax(kopio_lauta, int(syvyys), -np.inf, np.inf, siirtojen_maara, True, 0, 0)[1])
         return paras_valinta
 
 def main():
     """Käynnistää ai vs ai pelin.
     """
-    peli = Tekoaly_Peli()
+    peli = TekoalyPeli()
     peli.peli_silmukka()
 
 if __name__=="__main__":
