@@ -40,9 +40,11 @@ src/
 
 main.py: Käynnistää ohjelman (huom tekoäly pelissä tapahtuu ai_vs_ai.py)
 ai_vs_ai.py: Erillinen käyttöliittymä tietokone vastaan tietokone -pelille.
-käyttöliittymä.py: Käyttöliittymä-luokka vastaa pelisilmukasta; tapahtumien tarkastus/pelaajan syötteiden luku ja näytön piirtäminen.
+käyttöliittymä.py: Käyttöliittymä-luokka vastaa pelisilmukasta; tapahtumien
+tarkastus/pelaajan syötteiden luku ja näytön piirtäminen.
 
-toiminnot.py: Vastaa pelilaudan toiminnoista. Tallentaa siirrot matriisiin, tarkistaa voiton, tarkistaa onko siirto sallittu, tarkistaa seuraavan vapaan rivin.
+toiminnot.py: Vastaa pelilaudan toiminnoista. Tallentaa siirrot matriisiin,
+tarkistaa voiton, tarkistaa onko siirto sallittu, tarkistaa seuraavan vapaan rivin.
 pelilauta.py: Vastaa PeliLauta-oliosta.
 
 tekoäly/
@@ -76,6 +78,7 @@ Taulukko tarkistettavista tapauksista ja niiden pisteytys:
 | Voitto/Häviö | +/-500000 | syvyys |
 | Kolmen suora, molemmilla puolilla vapaa pelattava tila | +/-500000 | syvyys |
 | Kolme vierekkäin, vapaa toiselta puolelta | 10000/-9000 | kpl |
+
 *Huom. syvyys lasketaan suuremmasta pienempään, eli jos voitto saavutetaan yhden siirron päässä heuristinen arvo on suurempi kuin kolmen siirron päässä
 
 

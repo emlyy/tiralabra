@@ -10,7 +10,7 @@ poetry install
 ```
 poetry run invoke start
 ```
-4. Jos haluat käynnistää tekoäly vs tekoäly pelin käytö komentoa:
+4. Jos haluat käynnistää tekoäly vs tekoäly pelin käytä komentoa:
 ```
 poetry run invoke tekoaly
 ```
