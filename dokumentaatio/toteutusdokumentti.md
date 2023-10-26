@@ -92,6 +92,7 @@ Matriisin tilavaativuus riippu sen alkioiden määrästä (n=42) eli tilavaativu
 
 ## Työn mahdolliset puutteet ja parannusehdotukset
 - Mahdollisuus palata takaisin aloitusnäytölle.
+- Connect four strategioiden huomiominen.
 - Hidas syvyydellä 10 kun pelaa pygamella.
 - Mahdollisuus valita vaikeus-taso valikossa.
 - Tekoäly peli:
