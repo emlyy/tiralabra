@@ -61,7 +61,7 @@ tests/: yksikkötestit
 - Ohjelma on peli, jossa voi pelata Connect Four- peliä tekoälyä vastaan. Tekoälyn siirtojen valitsemiseen käytetään minimax-algoritmia alfa-beta karsinnalla.
 - Pelistä on kaksi versiota; ihminen vs tekoäly tai tekoäly vs tekoäly. Molemmat versiot on totetutettu pygamella ja käyttävät pelisilmukkaa, joka vastaa pelin eri vaiheista.
 - Pelin version voi valita aloitusnäytön valikossa. Huom. tekoäly vastaan tekoäly pelin voi myös aloittaa erikseen omalla komennolla.
-- Versio, jossa tietokone pelaa itseään vastaan on toteutettu niin että [paras_siirto_tekoaly_peli](src/tekoaly/minimax.py):a on muokattu versio `paras_siirto`. Funktiota on muokattu siten, että etsitään aina seuraavaksi pelaavalle pelaajalle paras siirto. Samoin [peli_silmukka_tekoaly_peli](src/kayttoliittyma.py) on muokattu siten, ettei tarkisteta käyttäjän syötteitä siirtoa varten, vaan tehdään siirto vuorotellen keltaiselle ja punaiselle pelaajalle.
+- Versio, jossa tietokone pelaa itseään vastaan on toteutettu niin että [paras_siirto_tekoaly_peli](/src/tekoaly/minimax.py):a on muokattu versio `paras_siirto`. Funktiota on muokattu siten, että etsitään aina seuraavaksi pelaavalle pelaajalle paras siirto. Samoin [peli_silmukka_tekoaly_peli](/src/kayttoliittyma.py) on muokattu siten, ettei tarkisteta käyttäjän syötteitä siirtoa varten, vaan tehdään siirto vuorotellen keltaiselle ja punaiselle pelaajalle.
 - Molemmissa versioissa käyttäjä voi aloittaa pelin alusta. Toisaalta pelkässä tietokoneen pelaamassa pelissä siirrot ovat aina samat, jos syvyyksiä ei muuta.
 - Tietokoneiden pelaamassa pelissä on lisätty viivettä siirtojen väliin, jotta peliä on helpompi seurata.
 
