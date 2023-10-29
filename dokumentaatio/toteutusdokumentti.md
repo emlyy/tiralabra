@@ -38,8 +38,8 @@ Tiedostot johon peli on jaettu:
 ```
 src/
 
-main.py: Käynnistää ohjelman (huom tekoäly pelissä tapahtuu ai_vs_ai.py)
-ai_vs_ai.py: Erillinen käyttöliittymä tietokone vastaan tietokone -pelille.
+main.py: Käynnistää ohjelman.
+ai_vs_ai.py: Käynnistää pelkän tekoäly pelin.
 käyttöliittymä.py: Käyttöliittymä-luokka vastaa pelisilmukasta; tapahtumien
 tarkastus/pelaajan syötteiden luku ja näytön piirtäminen.
 
@@ -48,7 +48,8 @@ tarkistaa voiton, tarkistaa onko siirto sallittu, tarkistaa seuraavan vapaan riv
 pelilauta.py: Vastaa PeliLauta-oliosta.
 
 tekoäly/
-minimax.py: Paras_siirto ja minimax algoritmi. Käytetään parhaan siirron selvittämiseen.
+minimax.py: Paras_siirto/paras_siirto_tekoaly_peli ja minimax algoritmi. Käytetään
+parhaan siirron selvittämiseen.
 pisteytys.py: Pelaajan aseman pisteyttämistä varten. Käy pelilaudan läpi ja laskee laudalle arvon.
 
 config.py: Pelin konfiguraatio.
@@ -57,17 +58,18 @@ tests/: yksikkötestit
 ```
 
 
-- Peli hyödyntää minimax-algoritmia alfa-beta karsinnalla, laskeakseen parhaan siirron.
-- Pelistä on kaksi versiota. Molemmat versiot on totetutettu pygamella ja käyttävät pelisilmukkaa, joka vastaa pelin eri vaiheista.
-- Normaali versio, jossa voi pelata tietokonetta vastaan. Normaalissa pelissä on lisäksi aloitusnäyttö, jossa pelaaja voi valita haluaako aloittaa vai että tietokone aloittaa.
-- Toinen versio on peli, jossa tietokone pelaa itseään vastaan. Toteutettu niin että [paras_siirto](src/ai_vs_ai.py):a on muokattu siten, että etsitään aina seuraavaksi pelaavalle pelaajalle paras siirto. Samoin [peli_silmukka](src/ai_vs_ai.py) on muokattu siten, ettei tarkisteta käyttäjän syötteitä siirtoa varten, vaan tehdään siirto vuorotellen keltaiselle ja punaiselle pelaajalle.
+- Ohjelma on peli, jossa voi pelata Connect Four- peliä tekoälyä vastaan. Tekoälyn siirtojen valitsemiseen käytetään minimax-algoritmia alfa-beta karsinnalla.
+- Pelistä on kaksi versiota; ihminen vs tekoäly tai tekoäly vs tekoäly. Molemmat versiot on totetutettu pygamella ja käyttävät pelisilmukkaa, joka vastaa pelin eri vaiheista.
+- Pelin version voi valita aloitusnäytön valikossa. Huom. tekoäly vastaan tekoäly pelin voi myös aloittaa erikseen omalla komennolla.
+- Versio, jossa tietokone pelaa itseään vastaan on toteutettu niin että [paras_siirto_tekoaly_peli](src/tekoaly/minimax.py):a on muokattu versio `paras_siirto`. Funktiota on muokattu siten, että etsitään aina seuraavaksi pelaavalle pelaajalle paras siirto. Samoin [peli_silmukka_tekoaly_peli](src/kayttoliittyma.py) on muokattu siten, ettei tarkisteta käyttäjän syötteitä siirtoa varten, vaan tehdään siirto vuorotellen keltaiselle ja punaiselle pelaajalle.
 - Molemmissa versioissa käyttäjä voi aloittaa pelin alusta. Toisaalta pelkässä tietokoneen pelaamassa pelissä siirrot ovat aina samat, jos syvyyksiä ei muuta.
 - Tietokoneiden pelaamassa pelissä on lisätty viivettä siirtojen väliin, jotta peliä on helpompi seurata.
 
 
 ## Heuristiikka:
+- Siirrot käydään minimaxilla aina järjestyksessä keskeltä ulospäin, koska parhaat siirrot löytyvät yleensä keskeltä. Siten saadaan puuta karsittua ja laskenta aikaa pienemmäksi.
 - Aina kun päästään pelin loppuun (voitto tai tasapeli) tai ollaan käyty haluttu syvyys läpi, arvioidaan pelilaudan tilanne, eli pelaajien asema pelissä.
-- Pisteytyksestä vastaa [pisteytys](/src/tekoaly/pisteytys.py)-funktio ja neljän suoran tarkistukseen käytetään [tarkista_voitto](/src/toiminnot.py)-metodia.
+- Pisteytyksestä vastaa [pisteytys](/src/tekoaly/pisteytys.py)-funktio ja neljän suoran tarkistukseen käytetään [tarkista_voitto](/src/toiminnot.py)-funktiota.
 - Molemmat pelaajat yrittävät maksimoida oman voittonsa ja minimoida toisen.
 - Ai koittaa saada mahdollisimman suuren heuristisen arvon pelilaudalle.
 - Vastaavasti kun lasketaan minimaxilla vastustajan pelattavia siirtoja halutaan saada mahdollisimman pieni arvo.
@@ -82,12 +84,11 @@ Taulukko tarkistettavista tapauksista ja niiden pisteytys:
 *Huom. syvyys lasketaan suuremmasta pienempään, eli jos voitto saavutetaan yhden siirron päässä heuristinen arvo on suurempi kuin kolmen siirron päässä
 
 
-
 ## Aika- ja tilavaativuudet
 Minimax algoritmi tarkistaa voiton, joka kerta kun sitä kutsutaan. Voiton tarkistuksen aikavaativuus on O(n), missä n on laudan alkioiden määrä eli rivi*sarakkeet = 42. Minimaxin kutsuman pisteytys-funktion aikavaativuus on samalla tavalla O(n). 
-Alfa-beta-karsinnalla minimaxin aikavaativuus on O(b^(d/2)), missä b on vaihtoehtoisten siirtojen määrä, ja d on puun syvyys. Jos karsintaa ei juuri tapahdu, paras valinta on laudan vasemmassa reunassa, ja kaikissa sarakkeissa on tilaa, pahin mahdollinen aikavaativuus on O(b^m). Lisäksi pygamen käyttö hidastaa koodin suoritusta jonkin verran. Varsinkin syvyemmissä (9-10) rekursioissa kestää kauemmin, kun minimaxia kutsutaan pelissä. Kun minimaxia kutsutaan pelin ulkopuolella, puun läpikäymiseen syvyydellä 10 menee huomattavasti vähemmän aikaa.
+Alfa-beta-karsinnalla minimaxin aikavaativuus on O(b^(d/2)), missä b on vaihtoehtoisten siirtojen määrä, ja d on puun syvyys. Jos karsintaa ei juuri tapahdu, paras valinta on laudan vasemmassa reunassa, ja kaikissa sarakkeissa on tilaa, pahin mahdollinen aikavaativuus on O(b^m). Pahin mahdollinen on kuitenkin erittäin epätodennäköinen, sillä siirrot käydään läpi keskeltä ulospäin, ja sarakkeet täyttyvät, kun siirtoja tulee lisää. Lisäksi pygamen käyttö hidastaa koodin suoritusta jonkin verran. Varsinkin syvyemmissä (9-10) rekursioissa kestää kauemmin, kun minimaxia kutsutaan pelissä. Kun minimaxia kutsutaan pelin ulkopuolella, puun läpikäymiseen syvyydellä 10 menee huomattavasti vähemmän aikaa.
 
-Matriisin tilavaativuus riippu sen alkioiden määrästä (n=42) eli tilavaativuus on O(n). Minimaxin tilavaativuus on O(bm), missä b on valintojen määrä ja m puun syvyys. Muun koodin tilavaativuus on O(1).
+Matriisin tilavaativuus riippu sen alkioiden määrästä (n=42) eli tilavaativuus on O(n). Minimaxin tilavaativuus on O(bm), missä b on valintojen määrä ja m puun syvyys.
 
 
 ## Työn mahdolliset puutteet ja parannusehdotukset
@@ -97,7 +98,6 @@ Matriisin tilavaativuus riippu sen alkioiden määrästä (n=42) eli tilavaativu
 - Mahdollisuus valita vaikeus-taso valikossa.
 - Tekoäly peli:
     - Aloitus siirrot olisisivat satunnaisia, muuten saadaan sama peli samalla syvyys valinnoilla.
-    - Mahdollisuus valita pelin valikossa tekoäly peli.
 
 ## Laajat kieilimallit
 - Laajoja kielimalleja ei ole käytetty työssä.

@@ -10,13 +10,13 @@ poetry install
 ```
 poetry run invoke start
 ```
-4. Jos haluat käynnistää tekoäly vs tekoäly pelin käytä komentoa:
+4. Jos haluat käynnistää pelkän tekoäly vs tekoäly pelin käytä komentoa:
 ```
 poetry run invoke tekoaly
 ```
 
 ## Peli
-- Valitse ensin haluatko aloittaa pelin. (Painamalla k aloittaa, p tietokone aloittaa pelin.)
+- Valitse ensin haluatko aloittaa pelin. (Painamalla k aloittaa, p tietokone aloittaa pelin. Painamalla a voit käynnistää tekoäly vastaan tekoäly pelin)
 - Voit valita seuraavan siirtosi liikuttamalla ja painamalla hiirtä.
 - Voit myös aloitta pelin uudelleen painamalla esc-näppäintä.
 
