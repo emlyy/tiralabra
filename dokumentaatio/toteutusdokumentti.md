@@ -69,7 +69,7 @@ tests/: yksikkötestit
 ## Heuristiikka:
 - Siirrot käydään minimaxilla aina järjestyksessä keskeltä ulospäin, koska parhaat siirrot löytyvät yleensä keskeltä. Siten saadaan puuta karsittua ja laskenta aikaa pienemmäksi.
 - Aina kun päästään pelin loppuun (voitto tai tasapeli) tai ollaan käyty haluttu syvyys läpi, arvioidaan pelilaudan tilanne, eli pelaajien asema pelissä.
-- Pisteytyksestä vastaa [pisteytys](/src/tekoaly/pisteytys.py)-funktio ja neljän suoran tarkistukseen käytetään [tarkista_voitto](/src/toiminnot.py)-funktiota.
+- Pisteytyksestä vastaa [pisteyta](/src/tekoaly/pisteytys.py)-funktio ja neljän suoran tarkistukseen käytetään [tarkista_voitto](/src/toiminnot.py)-funktiota.
 - Molemmat pelaajat yrittävät maksimoida oman voittonsa ja minimoida toisen.
 - Ai koittaa saada mahdollisimman suuren heuristisen arvon pelilaudalle.
 - Vastaavasti kun lasketaan minimaxilla vastustajan pelattavia siirtoja halutaan saada mahdollisimman pieni arvo.
