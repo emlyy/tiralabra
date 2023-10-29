@@ -1,6 +1,5 @@
 import unittest
-import numpy as np
-from tekoaly.minimax import paras_siirto
+from tekoaly.minimax import paras_siirto, paras_siirto_tekoaly_peli
 
 class TestParasSiirto(unittest.TestCase):
     def setUp(self):
@@ -94,4 +93,28 @@ class TestParasSiirto(unittest.TestCase):
                 [0, 0, 0, 1, 2, 0, 0],
                 [0, 0, 0, 1, 2, 0, 0]])
         self.siirto = paras_siirto(lauta, 36)
+        self.assertEqual(self.siirto, 4)
+
+class TestParasSiirtoTekoaly(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def test_parillinen_vuoro_tarkistaa_pelaaja_1_siirron(self):
+        lauta = ([[0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 2, 0, 0],
+                [0, 0, 0, 1, 2, 0, 0],
+                [0, 0, 0, 1, 2, 0, 0]])
+        self.siirto = paras_siirto_tekoaly_peli(lauta, 36, 5)
+        self.assertEqual(self.siirto, 3)
+
+    def test_pariton_vuoro_tarkistaa_pelaaja_2_siirron(self):
+        lauta = ([[0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 2, 0, 0],
+                [0, 0, 0, 1, 2, 0, 0],
+                [0, 0, 1, 1, 2, 0, 0]])
+        self.siirto = paras_siirto_tekoaly_peli(lauta, 35, 5)
         self.assertEqual(self.siirto, 4)

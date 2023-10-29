@@ -20,6 +20,27 @@ def paras_siirto(lauta: list, siirtojen_maara: int):
         minimax(kopio_lauta, int(SYVYYS), -np.inf, np.inf, siirtojen_maara, True, 0, 0)[1])
     return paras_valinta
 
+def paras_siirto_tekoaly_peli(lauta: list, siirtojen_maara: int, syvyys: int):
+    """Valitsee parhaan siirron minimax algoritmin avulla vuorotellen tekoäly pelaajille.
+    Käytetään ai vs ai pelissä.
+
+    Args:
+        lauta (list): Pelilaudan tämänhetkistä tilannetta kuvaava matriisi.
+        siirtojen_maara (int): Kertoo kuinka monta siirtoa on jäljellä tasapeliin.
+        syvyys (int): syvyys mikä halutaan käydä läpi minimaxilla.
+
+    Returns:
+        int: Palauttaa valitun sarakkeen.
+    """
+    kopio_lauta = deepcopy(lauta)
+    if siirtojen_maara % 2 == 0:
+        paras_valinta = (
+            minimax(kopio_lauta, int(syvyys), -np.inf, np.inf, siirtojen_maara, False, 0, 0)[1])
+        return paras_valinta
+    paras_valinta = (
+        minimax(kopio_lauta, int(syvyys), -np.inf, np.inf, siirtojen_maara, True, 0, 0)[1])
+    return paras_valinta
+
 def minimax(pelilauta: list, syvyys: int, alfa: float|int, beta: float|int,
             siirtojen_maara: int, ai_vuoro: bool, edellinen_rivi: int, edellinen_sarake: int):
     """Minimax algoritmi alfa-beta karsinnalla.

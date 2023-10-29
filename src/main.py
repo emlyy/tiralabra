@@ -6,7 +6,10 @@ def main():
     """
     peli = Kayttoliittyma()
     peli.aloitus_naytto()
-    peli.peli_silmukka()
+    if peli.ai_peli:
+        peli.peli_silmukka_tekoaly_peli()
+    else:
+        peli.peli_silmukka()
 
 if __name__=="__main__":
     try:

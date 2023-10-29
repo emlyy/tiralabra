@@ -1,11 +1,11 @@
 import pygame
 from pelilauta import PeliLauta
-from tekoaly.minimax import paras_siirto
+from tekoaly.minimax import paras_siirto, paras_siirto_tekoaly_peli
 from toiminnot import tarkista_voitto, sallittu_siirto, vapaa_rivi
 from config import (RIVIT, SARAKKEET, NAYTON_KOKO, FONT, TEKSTI_1_PAIKKA,
     TEKSTI_2_PAIKKA, SININEN, TUMMAN_SININEN, KELTAINEN, PUNAINEN, MUSTA,
     HARMAA, TEKSTI_3_PAIKKA, VALITSE, LAUTA_X, LAUTA_Y, LEVEYS, KORKEUS,
-    REUNA, HALKASIJA, LISA_X)
+    REUNA, HALKASIJA, LISA_X, SYVYYS_KELT, SYVYYS_PUN)
 
 class Kayttoliittyma:
     """Luokka vastaa pelin käyttöliittymästä.
@@ -15,6 +15,7 @@ class Kayttoliittyma:
         self.peli = PeliLauta()
         self.naytto = pygame.display.set_mode(NAYTON_KOKO)
         self.kello = pygame.time.Clock()
+        self.ai_peli = False
         self.kaynnissa = False
         self.aloitus = True
         self.tasapeli = False
@@ -52,7 +53,7 @@ class Kayttoliittyma:
         """
         while self.aloitus:
             self.piirra_aloitus_naytto()
-            self.tapahtumat()
+            self.tapahtumat_aloitus()
 
     def lopetus_naytto(self):
         """Silmukka, joka suorittaa lopetus näytön.
@@ -82,7 +83,6 @@ class Kayttoliittyma:
         self.peli.uusi_peli()
         self.piirra_naytto()
         while self.kaynnissa:
-            # Pelaajan vuoro; tarkistaa pelaajan syötteet
             if (self.vuoro+self.vuoro_lisa) % 2 == 0:
                 self.numero = -1
                 self.tapahtumat()
@@ -95,7 +95,6 @@ class Kayttoliittyma:
                     continue
                 if not self.siirto(self.numero, 1):
                     continue
-            # Tietokoneen vuoro; etsitään paras siirto minimaxilla
             else:
                 self.tapahtumat()
                 sarake = paras_siirto(self.peli.lauta, self.vuoro)
@@ -107,6 +106,20 @@ class Kayttoliittyma:
             self.piirra_naytto()
         self.lopetus_naytto()
 
+    def tapahtumat_aloitus(self):
+        """Käy läpi käyttäjän syötteet aloitusnäytön aikana.
+        """
+        for tapahtuma in pygame.event.get():
+            if tapahtuma.type == pygame.QUIT:
+                pygame.quit()
+            if tapahtuma.type == pygame.KEYDOWN:
+                if tapahtuma.key == pygame.K_k:
+                    self.valitse_aloittaja(1)
+                if tapahtuma.key == pygame.K_p:
+                    self.valitse_aloittaja(2)
+                if tapahtuma.key == pygame.K_a:
+                    self.valitse_aloittaja(3)
+
     def tapahtumat(self):
         """Käy läpi pelaajan syötteet.
         """
@@ -115,18 +128,10 @@ class Kayttoliittyma:
                 self.kaynnissa = False
                 pygame.quit()
             if tapahtuma.type == pygame.KEYDOWN:
-                # Pyydetään valitsemaan aloittaja
-                if self.aloitus:
-                    if tapahtuma.key == pygame.K_k:
-                        self.valitse(1)
-                    if tapahtuma.key == pygame.K_p:
-                        self.valitse(2)
-                # Tarkistetaan jos uudelleen aloitus
-                elif tapahtuma.key == pygame.K_ESCAPE:
+                if tapahtuma.key == pygame.K_ESCAPE:
                     self.resetointi = True
             if self.kaynnissa:
-                # Päivitetään pelaajan hiiren sijainti seuraavaa siirtoa varten
-                if (self.vuoro+self.vuoro_lisa) % 2 == 0:
+                if not self.ai_peli and (self.vuoro+self.vuoro_lisa) % 2 == 0:
                     if tapahtuma.type == pygame.MOUSEMOTION:
                         hiiri = pygame.mouse.get_pos()
                         if REUNA <= hiiri[0] <= LAUTA_X+LEVEYS:
@@ -134,20 +139,23 @@ class Kayttoliittyma:
                     if tapahtuma.type == pygame.MOUSEBUTTONDOWN:
                         self.numero = (self.hiiri[0]-REUNA)//HALKASIJA
 
-    def valitse(self, valinta: int):
-        """Alustukset sen mukaan kumpi aloittaa.
+    def valitse_aloittaja(self, valinta: int):
+        """Alustukset sen mukaan kumpi aloittaa tai jos valitaan tekoäly peli.
 
         Args:
-            valinta (int): 1: pelaaja aloittaa, 2: ai aloittaa.
+            valinta (int): 1: pelaaja aloittaa, 2: ai aloittaa,
+            3: ai vs ai peli.
         """
-        if valinta == 1:
-            self.pelaaja_vari = KELTAINEN
-            self.ai_vari = PUNAINEN
-            self.vuoro_lisa = 0
-        else:
+        self.pelaaja_vari = KELTAINEN
+        self.ai_vari = PUNAINEN
+        self.vuoro_lisa = 0
+        if valinta == 2:
             self.pelaaja_vari = PUNAINEN
             self.ai_vari = KELTAINEN
             self.vuoro_lisa = 1
+        elif valinta == 3:
+            self.ai_peli = True
+            self.ohje_teksti = "Keltainen aloittaa"
         self.aloitus = False
         self.kaynnissa = True
 
@@ -160,31 +168,31 @@ class Kayttoliittyma:
         self.vuoro = 42
         self.numero = -1
         self.peli.uusi_peli()
-        self.ohje_teksti = VALITSE
+        self.ohje_teksti = "uusi peli"
+        self.teksti_vari = MUSTA
 
     def piirra_aloitus_naytto(self):
         """Piirtää aloitusnäytön.
         """
         self.naytto.fill(HARMAA)
-        teksti_1 = self.font.render("Tervetuloa!", True, MUSTA)
-        self.naytto.blit(teksti_1, (TEKSTI_1_PAIKKA))
-        teksti_2 = self.font.render("paina k jos haluat aloittaa", True, MUSTA)
-        self.naytto.blit(teksti_2, (10,100))
-        teksti_3 = self.font.render("paina p jos haluat ai:n aloittavan", True, MUSTA)
-        self.naytto.blit(teksti_3, (10,150))
+        self.teksti("Tervetuloa", TEKSTI_1_PAIKKA, MUSTA)
+        self.teksti("paina k jos haluat aloittaa", (10,100), MUSTA)
+        self.teksti("paina p jos haluat ai:n aloittavan", (10,150), MUSTA)
+        self.teksti("paina a jos katso ai vs ai pelin", (10,200), MUSTA)
         pygame.display.update()
+
+    def teksti(self, sanat, koordinaatit, vari):
+        teksti = self.font.render(sanat, True, vari)
+        self.naytto.blit(teksti, (koordinaatit))
 
     def piirra_naytto(self):
         """Piirtää laudan ja tekstit.
         """
         self.naytto.fill(HARMAA)
         self.piirra_pelilauta()
-        teksti_1 = self.font.render("Tervetuloa!", True, MUSTA)
-        self.naytto.blit(teksti_1, (TEKSTI_1_PAIKKA))
-        teksti_2 = self.font.render(self.ohje_teksti, True, self.teksti_vari)
-        self.naytto.blit(teksti_2, (TEKSTI_2_PAIKKA))
-        teksti_3 = self.font.render("Aloita peli alusta painamalla ESC.", True, MUSTA)
-        self.naytto.blit(teksti_3, (TEKSTI_3_PAIKKA))
+        self.teksti("Tervetuloa", TEKSTI_1_PAIKKA, MUSTA)
+        self.teksti(self.ohje_teksti, TEKSTI_2_PAIKKA, self.teksti_vari)
+        self.teksti("Aloita peli alusta painamalla ESC.", TEKSTI_3_PAIKKA, MUSTA)
         pygame.display.update()
         self.kello.tick(30)
 
@@ -192,8 +200,8 @@ class Kayttoliittyma:
         """Vastaa pelilaudan piirtämisestä.
         """
         pygame.draw.rect(self.naytto, SININEN, pygame.Rect(LAUTA_X, LAUTA_Y, LEVEYS, KORKEUS))
-        if (self.vuoro+self.vuoro_lisa) % 2 == 0:
-            pygame.draw.circle(self.naytto, self.pelaaja_vari, (self.hiiri[0], 125),HALKASIJA/2)
+        if not self.ai_peli:
+            self.piirra_hiiri()
         for rivi in range(RIVIT):
             for sarake in range(SARAKKEET):
                 if self.peli.lauta[rivi][sarake] == 1:
@@ -206,6 +214,12 @@ class Kayttoliittyma:
                     (LISA_X+(HALKASIJA+2)*(sarake+1), REUNA+(HALKASIJA+2)*(rivi+1)),
                     HALKASIJA/2)
 
+    def piirra_hiiri(self):
+        """Piirtää ylhäällä liikutettavan seuraavan palan.
+        """
+        if (self.vuoro+self.vuoro_lisa) % 2 == 0:
+            pygame.draw.circle(self.naytto, self.pelaaja_vari, (self.hiiri[0], 125),HALKASIJA/2)
+
     def paivita(self):
         """Tarkistaa voiton ja tasapelin. Päivittää vuoron.
         """
@@ -217,3 +231,55 @@ class Kayttoliittyma:
         self.vuoro -= 1
         if (self.vuoro+self.vuoro_lisa) % 2 != 0:
             self.ohje_teksti = "Odota vuoroasi!"
+            if self.ai_peli:
+                self.ohje_teksti = "Punaisen vuoro"
+
+    def lopetus_naytto_tekoaly_peli(self):
+        """Silmukka, joka suorittaa lopetus näytön tekoäly pelille.
+
+        Piirtää näytön ja tarkistaa pelaajan syötteitä uudelleen aloittamisen varalta.
+        """
+        while True:
+            self.tapahtumat()
+            if self.resetointi:
+                self.aloita_alusta()
+                self.peli_silmukka_tekoaly_peli()
+                break
+            if self.tasapeli:
+                self.ohje_teksti = "Tasapeli!"
+            else:
+                if self.vuoro % 2 == 0:
+                    self.ohje_teksti = "Punainen voittaa"
+                    self.teksti_vari = PUNAINEN
+                else:
+                    self.ohje_teksti = "Keltainen voittaa"
+                    self.teksti_vari = KELTAINEN
+            self.piirra_naytto()
+
+    def peli_silmukka_tekoaly_peli(self):
+        """Pelin silmukka kun ai vs ai peli. Käy läpi tapahtumat, päivittää ja tulostaa näytön.
+        Valitsee vuorotellen parhaan siirron.
+        """
+        self.peli.uusi_peli()
+        self.piirra_naytto()
+        while self.kaynnissa:
+            pelaaja = 2
+            syvyys = SYVYYS_PUN
+            if self.vuoro % 2 == 0:
+                pelaaja = 1
+                syvyys = SYVYYS_KELT
+            self.tapahtumat()
+            if self.resetointi:
+                self.aloita_alusta()
+                self.peli_silmukka_tekoaly_peli()
+                break
+            if syvyys <= 9:
+                pygame.time.wait(2000)
+            sarake = paras_siirto_tekoaly_peli(self.peli.lauta, self.vuoro, syvyys)
+            if not self.siirto(sarake, pelaaja):
+                self.ohje_teksti = "ongelma"
+                continue
+            self.ohje_teksti = "Keltaisen vuoro"
+            self.paivita()
+            self.piirra_naytto()
+        self.lopetus_naytto_tekoaly_peli()
