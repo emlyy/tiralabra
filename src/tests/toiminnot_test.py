@@ -25,6 +25,13 @@ class TestToiminnot(unittest.TestCase):
         self.assertEqual(sallittu_siirto(self.lauta, "a"), False)
         self.assertEqual(sallittu_siirto(self.lauta, 9), False)
 
+    def test_tarkista_voitto_kun_ei_voittoa(self):
+        self.lauta[0][2] = 1
+        self.lauta[0][3] = 1
+        self.lauta[0][4] = 2
+        self.lauta[0][5] = 1
+        self.assertEqual(tarkista_voitto(self.lauta, (0,5)), False)
+
     def test_tarkista_voitto_rivi(self):
         self.lauta[0][2] = 1
         self.lauta[0][3] = 1
