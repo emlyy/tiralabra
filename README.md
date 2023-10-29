@@ -22,6 +22,10 @@ Peli käynnistyy komennolla:
 ```
 poetry run invoke start
 ```
+Voit käynnistää tekoäly vastaan tekoäly pelin komennolla:
+```
+poetry run invoke tekoaly
+```
 Testikattavuus raportti generoituu htmlcov-hakemistoon komennolla:
 ```
 poetry run invoke coverage-report
