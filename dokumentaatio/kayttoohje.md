@@ -40,10 +40,10 @@ Testit voi ajaa komennolla:
 ```
 poetry run invoke test
 ```
-Lisätietoa testeistä [testausdokumentissa](dokumentaatio/testausdokumentti.md).
+Lisätietoa testeistä [testausdokumentissa](/testausdokumentti.md).
 
 Pylint komennolla:
 ```
 poetry run invoke lint
 ```
-Kaikki komennot löytyvät [tasks.py](tasks.py)-tiedostosta.
+Kaikki komennot löytyvät [tasks.py](./tasks.py)-tiedostosta.
