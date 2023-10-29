@@ -2,6 +2,8 @@
 
 Helsingin yliopiston aineopintojen harjoitustyö: Algoritmit ja tekoäly
 
+[Release](https://github.com/emlyy/tiralabra/releases/tag/loppupalautus)
+
 ## Dokumentaatio
 - [käyttöohje](dokumentaatio/kayttoohje.md)
 - [määrittelydokumentti](dokumentaatio/maarittelydokumentti.md)
