@@ -1,7 +1,7 @@
 # Käyttöohje
 
 ## Asennus ja käynnistys Poetryn avulla
-1. Kloonaa repositorio tai lataa viimeisimmän releasen lähdekoodi.
+1. Kloonaa repositorio tai lataa viimeisimmän [releasen](https://github.com/emlyy/tiralabra/releases/tag/loppupalautus) lähdekoodi.
 2. (Asenna [Poetry](https://python-poetry.org/docs/)). Asenna riippuvuudet komennolla:
 ```
 poetry install
