@@ -1,7 +1,7 @@
 # Käyttöohje
 
 ## Asennus ja käynnistys Poetryn avulla
-1. Kloonaa repositorio.
+1. Kloonaa repositorio tai lataa viimeisimmän releasen lähdekoodi.
 2. (Asenna [Poetry](https://python-poetry.org/docs/)). Asenna riippuvuudet komennolla:
 ```
 poetry install
@@ -18,7 +18,7 @@ poetry run invoke tekoaly
 ## Peli
 - Valitse ensin haluatko aloittaa pelin. (Painamalla k aloittaa, p tietokone aloittaa pelin. Painamalla a voit käynnistää tekoäly vastaan tekoäly pelin)
 - Voit valita seuraavan siirtosi liikuttamalla ja painamalla hiirtä.
-- Voit myös aloitta pelin uudelleen painamalla esc-näppäintä.
+- Voit aloitta pelin uudelleen painamalla esc-näppäintä.
 
 ## Konfiguraatio
 Jos haluat vaihtaa puun läpikäytävää syvyyttä:
@@ -28,3 +28,22 @@ SYVYYS = os.getenv("SYVYYS") or 8   # normaalin pelin syvyys
 SYVYYS_KELT = 4    # tekoäly vs tekoäly pelin keltainen pelaaja
 SYVYYS_PUN = 7     # tekoäly vs tekoäly pelin punainen pelaaja
 ```
+
+Testeissä käytetty syvyys on konfiguroitu .env.test -tiedostossa:
+```
+.env.test rivi 3
+SYVYYS = 5
+```
+
+## Muita komentoja
+Testit voi ajaa komennolla:
+```
+poetry run invoke test
+```
+Lisätietoa testeistä [testausdokumentissa](dokumentaatio/testausdokumentti.md).
+
+Pylint komennolla:
+```
+poetry run invoke lint
+```
+Kaikki komennot löytyvät [tasks.py](tasks.py)-tiedostosta.
